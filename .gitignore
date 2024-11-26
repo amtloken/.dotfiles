@@ -1,3 +1,6 @@
+# Root level temp files
+*~
+
 # Elisp and Emacs temp files
 emacs/*.el*
 emacs/*~
