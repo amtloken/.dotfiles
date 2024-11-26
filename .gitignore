@@ -1,0 +1,9 @@
+# Elisp and emacs temp files
+emacs/*.el*
+emacs/*~
+
+# Folder structure from running Emacs(client)
+emacs/auto-save-list/
+emacs/elpa/
+emacs/org-persist/
+emacs/server/
