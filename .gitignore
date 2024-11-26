@@ -1,4 +1,4 @@
-# Elisp and emacs temp files
+# Elisp and Emacs temp files
 emacs/*.el*
 emacs/*~
 
