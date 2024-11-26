@@ -14,6 +14,14 @@
 	  use-package-expand-minimally t))
 #+end_src
 
+* Filenkoding
+#+begin_src emacs-lisp
+  (set-language-environment "UTF-8")
+  (prefer-coding-system 'utf-8)
+  (set-default-coding-system 'utf-8)
+  (set-selection-coding-system 'utf-8)
+#+end_src
+
 
 * Magit
 #+begin_src emacs-lisp
