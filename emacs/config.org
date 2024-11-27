@@ -1,4 +1,7 @@
-* Pakkeh�ndtering
+#+title: Konfigurasjonsdokument for GNU Emacs
+#+author: Arne Magnus Tveita Løken
+
+* Pakkehåndtering
 #+begin_src emacs-lisp
   (require 'package)
   (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
@@ -56,3 +59,7 @@
 
   (setq org-return-follows-link t)
 #+end_src
+
+# Local Variables:
+# coding: utf-8
+# End:
