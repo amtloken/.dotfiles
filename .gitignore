@@ -10,3 +10,4 @@ emacs/auto-save-list/
 emacs/elpa/
 emacs/org-persist/
 emacs/server/
+emacs/transient/
