@@ -84,6 +84,14 @@
   (setq org-return-follows-link t)
 #+end_src
 
+* Fargetema
+#+begin_src emacs-lisp
+  (use-package zenburn-theme
+    :config
+    (load-theme 'zenburn t)
+    )
+#+end_src
+
 # Local Variables:
 # coding: utf-8
 # End:
