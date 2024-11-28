@@ -116,7 +116,13 @@ fila under redigering befinner seg.
 * Org mode
 ** Agenda
 #+begin_src emacs-lisp
-(setq org-agenda-files '("~/Org/agenda.org"))
+  (setq org-agenda-files '("~/Org/agenda.org"))
+#+end_src
+** Org bullets
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (use-package org-bullets)
+  (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1)))
 #+end_src
 ** Org tempo
 #+begin_src emacs-lisp
@@ -125,6 +131,6 @@ fila under redigering befinner seg.
 ** Toc-Org
 #+begin_src emacs-lisp
   (use-package toc-org
-  :commands toc-org-enable
-  :init (add-hook 'org-mode-hook 'toc-org-enable))
+    :commands toc-org-enable
+    :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
