@@ -18,6 +18,7 @@
   - [[#diminish-org-indent][Diminish org indent]]
   - [[#org-level-headers][Org Level Headers]]
   - [[#org-tempo][Org tempo]]
+  - [[#preserve-indentation-on-org-babel-tangle][Preserve Indentation on Org-Babel-Tangle]]
   - [[#toc-org][Toc-Org]]
 
 * Fonter
@@ -166,6 +167,10 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
 ** Org tempo
 #+begin_src emacs-lisp
   (require 'org-tempo)
+#+end_src
+** Preserve Indentation on Org-Babel-Tangle
+#+begin_src emacs-lisp
+  (setq org-src-preserve-indentation t)
 #+end_src
 ** Toc-Org
 #+begin_src emacs-lisp
