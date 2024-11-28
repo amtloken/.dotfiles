@@ -59,7 +59,6 @@ Bruk CTRL og +/-, eller musehjulet, til å justere fontstørrelse ved behov.
   (set-selection-coding-system 'utf-8)
 #+end_src
 
-
 * Magit
 #+begin_src emacs-lisp
   (use-package magit
@@ -113,3 +112,9 @@ fila under redigering befinner seg.
 # Local Variables:
 # coding: utf-8
 # End:
+
+* Org mode
+** Org tempo
+#+begin_src emacs-lisp
+  (require 'org-tempo)
+#+end_src
