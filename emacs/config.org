@@ -9,6 +9,7 @@
 - [[#filenkoding][Filenkoding]]
 - [[#magit][Magit]]
 - [[#evil][Evil]]
+- [[#all-the-icons][All the icons]]
 - [[#fargetema][Fargetema]]
 - [[#neotree][Neotree]]
 - [[#projectile][Projectile]]
@@ -116,6 +117,15 @@ Bruk CTRL og +/-, eller musehjulet, til å justere fontstørrelse ved behov.
   (setq org-return-follows-link t)
 #+end_src
 
+* All the icons
+#+begin_src emacs-lisp
+(use-package all-the-icons
+  :ensure t
+  :if (display-graphic-p))
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . (lambda() (all-the-icons-dired-mode t))))
+#+end_src
 * Fargetema
 #+begin_src emacs-lisp
   (use-package zenburn-theme
@@ -219,3 +229,4 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
   :config
   (rainbow-delimiters-mode))
 #+end_src
+
