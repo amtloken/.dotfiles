@@ -1,24 +1,42 @@
 #+title: Konfigurasjonsdokument for GNU Emacs
 #+author: Arne Magnus Tveita Løken
+#+options: toc:2
+
+* Innholdsfortegnelse :toc:
+- [[#fonter][Fonter]]
+  - [[#midlertidig-justering-av-fonter][Midlertidig justering av fonter]]
+- [[#pakkehåndtering][Pakkehåndtering]]
+- [[#filenkoding][Filenkoding]]
+- [[#magit][Magit]]
+- [[#evil][Evil]]
+- [[#fargetema][Fargetema]]
+- [[#backup][Backup]]
+- [[#diminish][Diminish]]
+- [[#org-mode][Org mode]]
+  - [[#agenda][Agenda]]
+  - [[#org-bullets][Org bullets]]
+  - [[#diminish-org-indent][Diminish org indent]]
+  - [[#org-tempo][Org tempo]]
+  - [[#toc-org][Toc-Org]]
 
 * Fonter
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil
-		      :font "Source Code Pro"
-		      :height 110
-		      :weight 'medium)
+                      :font "Source Code Pro"
+                      :height 110
+                      :weight 'medium)
   (set-face-attribute 'variable-pitch nil
-		      :font "Source Serif 4 Medium"
-		      :height 120
-		      :weight 'medium)
+                      :font "Source Serif 4 Medium"
+                      :height 120
+                      :weight 'medium)
   (set-face-attribute 'fixed-pitch nil
-		      :font "Source Code Pro"
-		      :height 110
-		      :weight 'medium)
+                      :font "Source Code Pro"
+                      :height 110
+                      :weight 'medium)
   (set-face-attribute 'font-lock-comment-face nil
-		      :slant 'italic)
+                      :slant 'italic)
   (set-face-attribute 'font-lock-keyword-face nil
-		      :slant 'italic)
+                      :slant 'italic)
 
   (add-to-list 'default-frame-alist '(font. "Source Code Pro-11"))
 
@@ -48,7 +66,7 @@ Bruk CTRL og +/-, eller musehjulet, til å justere fontstørrelse ved behov.
     (package-install 'use-package))
   (eval-and-compile
     (setq use-package-always-ensure t
-	  use-package-expand-minimally t))
+          use-package-expand-minimally t))
 #+end_src
 
 * Filenkoding
@@ -71,10 +89,10 @@ Bruk CTRL og +/-, eller musehjulet, til å justere fontstørrelse ved behov.
   (use-package evil
     :init
     (setq evil-want-integration t
-	  evil-want-keybinding nil
-	  evil-vsplit-window-right t
-	  evil-split-window-below t
-	  evil-undo-system 'undo-redo)
+          evil-want-keybinding nil
+          evil-vsplit-window-right t
+          evil-split-window-below t
+          evil-undo-system 'undo-redo)
     (evil-mode))
 
   (use-package evil-collection
@@ -116,7 +134,7 @@ fila under redigering befinner seg.
 * Diminish
 Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
 #+begin_src emacs-lisp
-(use-package diminish)
+  (use-package diminish)
 #+end_src
 * Org mode
 ** Agenda
@@ -131,7 +149,7 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
 #+end_src
 ** Diminish org indent
 #+begin_src emacs-lisp
-(eval-after-load 'org-indent '(diminish 'org-indent-mode))
+  (eval-after-load 'org-indent '(diminish 'org-indent-mode))
 #+end_src
 ** Org tempo
 #+begin_src emacs-lisp
