@@ -114,6 +114,10 @@ fila under redigering befinner seg.
 # End:
 
 * Org mode
+** Agenda
+#+begin_src emacs-lisp
+(setq org-agenda-files '("~/Org/agenda.org"))
+#+end_src
 ** Org tempo
 #+begin_src emacs-lisp
   (require 'org-tempo)
