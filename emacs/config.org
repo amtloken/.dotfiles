@@ -10,6 +10,7 @@
 - [[#magit][Magit]]
 - [[#evil][Evil]]
 - [[#fargetema][Fargetema]]
+- [[#neotree][Neotree]]
 - [[#backup][Backup]]
 - [[#diminish][Diminish]]
 - [[#org-mode][Org mode]]
@@ -120,8 +121,33 @@ Bruk CTRL og +/-, eller musehjulet, til å justere fontstørrelse ved behov.
     :config
     (load-theme 'zenburn t)
     )
-#+end_src
 
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t)
+  (load-theme 'doom-one t)
+  (doom-themes-neotree-config)
+  (doom-themes-org-config))
+#+end_src
+* Neotree
+#+begin_src emacs-lisp
+(use-package neotree
+  :config
+  (setq neo-smart-open t
+	neo-show-hidden-files t
+	neo-window-width 55
+	neo-window-fixed-size nil
+	inhibit-compacting-font-caches t
+	projectile-switch-project-action 'neotree-projectile-action)
+  (add-hook 'neo-after-create-hook
+	    #'(lambda (_)
+		(with-current-buffer (get-buffer neo-buffer-name)
+		  (setq truncate-lines t)
+		  (setq word-wrap nil)
+		  (make-local-variable 'auto-hscroll-mode)
+		  (setq auto-hscroll-mode nil)))))
+#+end_src
 * Backup
 Flytter automatiske backup-filer til et dedikert sted, heller enn hvor enn
 fila under redigering befinner seg.
