@@ -11,6 +11,7 @@
 - [[#evil][Evil]]
 - [[#fargetema][Fargetema]]
 - [[#neotree][Neotree]]
+- [[#projectile][Projectile]]
 - [[#backup][Backup]]
 - [[#diminish][Diminish]]
 - [[#org-mode][Org mode]]
@@ -147,6 +148,12 @@ Bruk CTRL og +/-, eller musehjulet, til å justere fontstørrelse ved behov.
 		  (setq word-wrap nil)
 		  (make-local-variable 'auto-hscroll-mode)
 		  (setq auto-hscroll-mode nil)))))
+#+end_src
+* Projectile
+#+begin_src emacs-lisp
+(use-package projectile
+  :config
+  (projectile-mode 1))
 #+end_src
 * Backup
 Flytter automatiske backup-filer til et dedikert sted, heller enn hvor enn
