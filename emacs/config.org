@@ -92,6 +92,14 @@
     )
 #+end_src
 
+* Backup
+Flytter automatiske backup-filer til et dedikert sted, heller enn hvor enn
+fila under redigering befinner seg.
+#+begin_src emacs-lisp
+  (setq backup-directory-alist '((".*" . "~/.local/share/Trash/files")))
+#+end_src
+
+
 # Local Variables:
 # coding: utf-8
 # End:
