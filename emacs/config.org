@@ -113,6 +113,11 @@ fila under redigering befinner seg.
 # coding: utf-8
 # End:
 
+* Diminish
+Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
+#+begin_src emacs-lisp
+(use-package diminish)
+#+end_src
 * Org mode
 ** Agenda
 #+begin_src emacs-lisp
@@ -123,6 +128,10 @@ fila under redigering befinner seg.
   (add-hook 'org-mode-hook 'org-indent-mode)
   (use-package org-bullets)
   (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1)))
+#+end_src
+** Diminish org indent
+#+begin_src emacs-lisp
+(eval-after-load 'org-indent '(diminish 'org-indent-mode))
 #+end_src
 ** Org tempo
 #+begin_src emacs-lisp
