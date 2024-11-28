@@ -25,6 +25,16 @@
   (setq-default line-spacing 0.12)
 #+end_src
 
+** Midlertidig justering av fonter
+Bruk CTRL og +/-, eller musehjulet, til å justere fontstørrelse ved behov.
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-+") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+#+end_src
+
 * Pakkehåndtering
 #+begin_src emacs-lisp
   (require 'package)
