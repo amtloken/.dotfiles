@@ -20,6 +20,7 @@
   - [[#org-tempo][Org tempo]]
   - [[#preserve-indentation-on-org-babel-tangle][Preserve Indentation on Org-Babel-Tangle]]
   - [[#toc-org][Toc-Org]]
+- [[#rainbow-delimiters][Rainbow Delimiters]]
 
 * Fonter
 #+begin_src emacs-lisp
@@ -177,4 +178,11 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
   (use-package toc-org
     :commands toc-org-enable
     :init (add-hook 'org-mode-hook 'toc-org-enable))
+#+end_src
+
+* Rainbow Delimiters
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :config
+  (rainbow-delimiters-mode))
 #+end_src
