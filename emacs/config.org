@@ -128,8 +128,6 @@ Bruk CTRL og +/-, eller musehjulet, til å justere fontstørrelse ved behov.
 #+end_src
 * Fargetema
 #+begin_src emacs-lisp
-(use-package zenburn-theme)
-
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t
