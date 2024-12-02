@@ -24,6 +24,7 @@
   - [[#preserve-indentation-on-org-babel-tangle][Preserve Indentation on Org-Babel-Tangle]]
   - [[#toc-org][Toc-Org]]
 - [[#rainbow-delimiters][Rainbow Delimiters]]
+- [[#company][Company]]
 
 * Fonter
 #+begin_src emacs-lisp
@@ -225,3 +226,21 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
   (rainbow-delimiters-mode))
 #+end_src
 
+* Company
+#+begin_src emacs-lisp
+(use-package company
+  :defer 2
+  :diminish
+  :costum
+  (company-begin-commands '(self-insert-command))
+  (company-idle-delay .1)
+  (company-minimum-prefix-length 2)
+  (company-show-numbers t)
+  (company-tooltip-align-annotations 't)
+  (global-company-mode t))
+
+(use-package company-box
+  :after company
+  :diminish
+  :hook (company-mode . company-box-mode))
+#+end_src
