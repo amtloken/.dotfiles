@@ -26,6 +26,7 @@
 - [[#rainbow-delimiters][Rainbow Delimiters]]
 - [[#company][Company]]
 - [[#ivy][Ivy]]
+- [[#python][Python]]
 
 * Fonter
 #+begin_src emacs-lisp
@@ -284,4 +285,16 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
   (ivy-set-display-transformer 'ivy-switch-buffer
 			         'ivy-rich-switch-buffer-transformer))
 
+#+end_src
+
+* Python
+#+begin_src emacs-lisp
+(use-package conda
+  :init
+  (conda-env-initialize-interactive-shells)
+  (conda-env-initialize-eshell)
+  (conda-env-autoactivate-mode t)
+  (conda-mode-line-setup)
+  :config
+  (setq conda-env-home-directory '(getenv "CONDA_HOME")))
 #+end_src
