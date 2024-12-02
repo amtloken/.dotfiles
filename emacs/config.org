@@ -27,6 +27,7 @@
 - [[#company][Company]]
 - [[#ivy][Ivy]]
 - [[#python][Python]]
+- [[#general-keybindings][General keybindings]]
 
 * Fonter
 #+begin_src emacs-lisp
@@ -171,10 +172,6 @@ fila under redigering befinner seg.
 #+end_src
 
 
-# Local Variables:
-# coding: utf-8
-# End:
-
 * Diminish
 Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
 #+begin_src emacs-lisp
@@ -296,5 +293,27 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
   (conda-env-autoactivate-mode t)
   (conda-mode-line-setup)
   :config
-  (setq conda-env-home-directory '(getenv "CONDA_HOME")))
+  (setq conda-env-home-directory '(getenv "CONDA_HOME")
+	  python-shell-interpreter "python"))
 #+end_src
+
+* General keybindings
+#+begin_src emacs-lisp
+(use-package general
+  :config
+  (general-evil-setup)
+
+  ;; Set up 'SPC' as the global leader key
+  (general-create-definer amtl/leader-keys
+	:states '(normal insert visual emacs)
+	:keymaps 'override
+	:prefix "SPC" ;; set leader
+	:global-prefix "M-SPC") ;; access leader in insert mode
+  )
+		
+
+#+end_src
+
+# Local Variables:
+# coding: utf-8
+# End:
