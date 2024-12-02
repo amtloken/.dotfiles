@@ -247,7 +247,7 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
 * Ivy
 #+begin_src emacs-lisp
 (use-package counsel
-  :after ivt
+  :after ivy
   :diminish
   :config
   (counsel-mode)
