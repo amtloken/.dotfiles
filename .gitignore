@@ -8,6 +8,7 @@ emacs/*~
 # Folder structure from running Emacs(client)
 emacs/auto-save-list/
 emacs/elpa/
+emacs/eshell/
 emacs/org-persist/
 emacs/server/
 emacs/transient/
