@@ -316,7 +316,19 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
     "=" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
     "TAB TAB" '(comment-line :wk "Comment lines")
     "u" '(universal-argument :wk "Universal argument"))
+
+  (amtl/leader-keys
+    "d" '(:ignore t :wk "Dired")
+    "d d" '(dired :wk "Open dired")
+    "d f" '(wdired-finish-edit :wk "Write dired finish edit")
+    "d j" '(dired-jump :wk "Dired jump to current")
+    "d n" '(neotree-dir :wk "Open directory in neotree")
+    "d p" '(peep-dired :wk "Peep-dired")
+    "d w" '(wdired-change-do-wdired-mode :wk "Writable dired"))
+  
   )
+
+
 		
 
 #+end_src
