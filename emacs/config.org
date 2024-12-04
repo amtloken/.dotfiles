@@ -29,6 +29,7 @@
 - [[#python][Python]]
 - [[#general-keybindings][General keybindings]]
 - [[#pretty-symbols][Pretty symbols]]
+- [[#highlight-current-line][Highlight current line]]
 
 * Fonter
 #+begin_src emacs-lisp
@@ -365,6 +366,17 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
     :config
     (global-pretty-mode t)))
 #+end_src
+
+* Highlight current line
+#+begin_src emacs-lisp
+(when window-system
+  (add-hook 'prog-mode-hook 'hl-line-mode))
+
+#+end_src
+
+
+
 # Local Variables:
 # coding: utf-8
+
 # End:
