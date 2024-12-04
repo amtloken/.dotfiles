@@ -28,6 +28,7 @@
 - [[#ivy][Ivy]]
 - [[#python][Python]]
 - [[#general-keybindings][General keybindings]]
+- [[#pretty-symbols][Pretty symbols]]
 
 * Fonter
 #+begin_src emacs-lisp
@@ -356,6 +357,14 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
 
 #+end_src
 
+
+* Pretty symbols
+#+begin_src emacs-lisp
+(when window-system
+  (use-package pretty-mode
+    :config
+    (global-pretty-mode t)))
+#+end_src
 # Local Variables:
 # coding: utf-8
 # End:
