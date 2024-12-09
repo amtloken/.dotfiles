@@ -31,6 +31,7 @@
 - [[#pretty-symbols][Pretty symbols]]
 - [[#highlight-current-line][Highlight current line]]
 - [[#which-key][Which-key]]
+- [[#config-reload][Config reload]]
 
 * Fonter
 #+begin_src emacs-lisp
@@ -383,6 +384,17 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
 
 #+end_src
 
+* Config reload
+#+begin_src emacs-lisp
+(defun config-reload()
+  "Reloads ~/.config/emacs/early-init.el at runtime"
+  (interactive)
+  (load-file
+   (expand-file-name "~/.config/emacs/early-init.el")))
+(global-set-key (kbd "C-c r") 'config-reload)
+  
+
+#+end_src
 
 
 # Local Variables:
