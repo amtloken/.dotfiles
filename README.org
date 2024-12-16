@@ -1,0 +1,9 @@
+#+title: Arnes Dotfiles
+#+author: Arne Magnus Tveita Løken
+#+options: toc:2
+
+* Innholdsfortegnelse :toc:
+- [[#hva-er-dette][Hva er dette?]]
+
+* Hva er dette?
+Dotfiler er konfigurasjonsfiler som brukes til å personliggjøre Linux- og Unixbaserte systemer. Navnet `dotfiler' kommer av at filnavnet begynner med et punktum -- en dot. Punktumet først i fil- eller katalognavnet indikerer at det er en gjemt fil eller ei gjemt mappe. Dette repoet inneholder mine personlige dotfiler. De lagres her av bekvemmelighetsårsaker slik at jeg enkelt kan få tilgang til dem på nye maskiner eller nye installasjoner. Eventuelt kan også andre potensielt hente inspirasjon fra dem til sin egen konfigurasjon.
