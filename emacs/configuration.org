@@ -5,26 +5,30 @@
 
 * Fonter
 #+begin_src emacs-lisp
-  (set-face-attribute 'default nil
-		      :font "Source Code Pro"
-		      :height 110
-		      :weight 'medium)
-  (set-face-attribute 'variable-pitch nil
-		      :font "Source Serif 4 Medium"
-		      :height 120
-		      :weight 'medium)
-  (set-face-attribute 'fixed-pitch nil
-		      :font "Source Code Pro"
-		      :height 110
-		      :weight 'medium)
-  (set-face-attribute 'font-lock-comment-face nil
-		      :slant 'italic)
-  (set-face-attribute 'font-lock-keyword-face nil
-		      :slant 'italic)
+  (defun amtl-after-frame (frame)
+    (if (display-graphic-p frame)
+	(progn
+	  (add-to-list 'default-frame-alist '(font . "Source Code Pro-11"))
+	  (set-face-attribute 'default nil
+			      :font "Source Code Pro"
+			      :height 110
+			      :weight 'medium)
+	  (set-face-attribute 'variable-pitch nil
+			      :font "Source Serif 4 Medium"
+			      :height 120
+			      :weight 'medium)
+	  (set-face-attribute 'fixed-pitch nil
+			      :font "Source Code Pro"
+			      :height 110
+			      :weight 'medium)
+	  (set-face-attribute 'font-lock-comment-face nil
+			      :slant 'italic)
+	  (set-face-attribute 'font-lock-keyword-face nil
+			      :slant 'italic)
+	  (setq-default line-spacing 0.12))))
 
-  (add-to-list 'default-frame-alist '(font. "Source Code Pro-11"))
-
-  (setq-default line-spacing 0.12)
+  (mapc 'amtl-after-frame (frame-list))
+  (add-hook 'after-make-frame-functions 'amtl-after-frame)
 #+end_src
 
 ** Midlertidig justering av fonter
