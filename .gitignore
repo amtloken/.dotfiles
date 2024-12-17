@@ -12,3 +12,6 @@ emacs/eshell/
 emacs/org-persist/
 emacs/server/
 emacs/transient/
+
+# Git
+git/allowed_signers
