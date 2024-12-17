@@ -4,6 +4,7 @@
 
 
 * Fonter
+Fontjustering legges til en egen funksjon som kalles etter å ha laget en frame, for å sikre at dette også fungerer som ønsket i daemonmodus.
 #+begin_src emacs-lisp
   (defun amtl-after-frame (frame)
     (if (display-graphic-p frame)
@@ -42,6 +43,14 @@
 
 * Pakkehåndtering
 #+begin_src emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.prg/packages/") t)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/packages/") t)
+  (package-initialize)
+
+  (defun package--save-selected-packages (&rest opt) nil)
+  
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
