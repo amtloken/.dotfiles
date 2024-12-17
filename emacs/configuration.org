@@ -227,3 +227,13 @@ Bruk =eldoc-mode= til å vise dokumentasjon.
   (add-to-list 'org-structure-template-alist
 			   '("el" . "src emacs-lisp"))
 #+end_src
+
+* =all-the-icons=
+#+begin_src emacs-lisp
+  (use-package all-the-icons
+	:if (display-graphic-p))
+
+  (use-package all-the-icons-dired
+	:hook
+	(dired-mode . (lambda() (all-the-icons-dired-mode t))))
+#+end_src
