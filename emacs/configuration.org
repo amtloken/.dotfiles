@@ -237,3 +237,14 @@ Bruk =eldoc-mode= til å vise dokumentasjon.
 	:hook
 	(dired-mode . (lambda() (all-the-icons-dired-mode t))))
 #+end_src
+
+* Globale innstillinger
+** Besøk Emacs-konfigurasjonsdokument
+Hurtigtasten =C-c e= åpner Emacs-konfigurasjonsdokumentet:
+#+begin_src emacs-lisp
+  (defun +visit-emacs-config ()
+	(interactive)
+	(find-file (concat user-emacs-directory "configuration.org")))
+
+  (global-set-key (kbd "C-c e") '+visit-emacs-config)
+#+end_src
