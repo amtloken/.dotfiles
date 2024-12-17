@@ -121,6 +121,41 @@ Anvend =evil= med Org-agendaer.
 #+end_src
 
 * Prosjekthåndtering
+** =magit=
+#+begin_src emacs-lisp
+  (use-package magit
+    :ensure-system-package git
+    :bind ("C-x g" . magit-status)
+
+    :config
+    (use-package magit-section)
+    (use-package with-editor)
+
+    (require 'git-rebase)
+
+    (defun +get-author-parse-line (key value domain)
+      (let * ((values (mapchar #'s-trim (s-split ";" value)))
+	      (name (car values))
+	      (email (or (cadr values) key)))
+	   (format "%s <%s@%s>" name email domain)))
+
+    (defun +git-authors ()
+      (let * ((config (yaml-parse-string (f-read-text "~/.git-authors")))
+	      (domain (gethash 'domain (gethash 'email config)))
+	      (authors '()))
+	   (+maphash (lambda (k v) (+git-author-parse-line k v domain))
+		     (gethash 'authors config))))
+
+    (defun +insert-git-coauthor ()
+      "Prompt for co-author and insert a co-authored-by block."
+      (interactive)
+      (insert (format "Co-authored by: %s\n"
+		      (completing-read "Co-authored by:" (+git-authors)))))
+
+    (setq git-commit-summary-max-length 50
+	  magit-bury-buffer-function 'magit-restore-window-configuration
+	  magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1))
+#+end_src
 ** =undo-tree=
 #+begin_src emacs-lisp
   (use-package undo-tree
