@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 #+title: Konfigurasjonsdokument for GNU Emacs
-#+author: Arne Magnus Tveita Løken
+#+author: Arne Magnus Tveita LÃ¸ken
 #+options: toc:2
 
 
-* Pakkehåndtering
-** Legg til pakkebrønner, og installer =use-package=
+* PakkehÃ¥ndtering
+** Legg til pakkebrÃ¸nner, og installer =use-package=
 #+begin_src emacs-lisp
   (require 'package)
   (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
@@ -30,13 +31,13 @@
   (setq load-prefer-newer t)
 #+end_src
 ** Fjern advarsler om =cl=-biblioteket
-=cl= er utdatert, men mange pakker bruker det fortsatt. Dette er utenfor min kontroll, men jeg velger å undertrykke advarslene.
+=cl= er utdatert, men mange pakker bruker det fortsatt. Dette er utenfor min kontroll, men jeg velger Ã¥ undertrykke advarslene.
 #+begin_src emacs-lisp
   (setq byte-compile-warnings '(cl-functions))
 #+end_src
 
 * Fonter
-Fontjustering legges til en egen funksjon som kalles etter å ha laget en frame, for å sikre at dette også fungerer som ønsket i daemonmodus.
+Fontjustering legges til en egen funksjon som kalles etter Ã¥ ha laget en frame, for Ã¥ sikre at dette ogsÃ¥ fungerer som Ã¸nsket i daemonmodus.
 #+begin_src emacs-lisp
   (defun amtl-after-frame (frame)
     (if (display-graphic-p frame)
@@ -120,7 +121,7 @@ Anvend =evil= med Org-agendaer.
     (evil-org-agenda-set-keys))
 #+end_src
 
-* Prosjekthåndtering
+* ProsjekthÃ¥ndtering
 ** =magit=
 #+begin_src emacs-lisp
   (use-package magit
@@ -179,3 +180,5 @@ Anvend =evil= med Org-agendaer.
     (advice-add #'undo-tree-load-history :around
 		#'+undo-tree-suppress-buffer-modified-message))
 #+end_src
+
+
