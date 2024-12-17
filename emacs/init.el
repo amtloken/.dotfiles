@@ -1,10 +1,10 @@
-;; Configure package.el to include MELPA.
-(require 'package)
-(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.prg/packages/") t)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/packages/") t)
-(package-initialize)
-
-(defun package--save-selected-packages (&rest opt) nil)
-
-(org-babel-load-file (concat user-emacs-directory "configuration.org"))
+;; Tangle org file if needed
+(let* ((default-directory user-emacs-directory)
+       (org-file "configuration.org")
+       (el-file "configuration.el")
+       (changed-at (file-attribute-modification-time (file-attributes org-file))))
+  (require 'org-macs)
+  (unless (org-file-newer-than-p el-file changed-at)
+    (require 'ob-tangle)
+    (org-babel-tangle-file org-file el-file "emacs-lisp"))
+  (load-file el-file))
