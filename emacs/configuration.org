@@ -181,4 +181,30 @@ Anvend =evil= med Org-agendaer.
 		#'+undo-tree-suppress-buffer-modified-message))
 #+end_src
 
+* Programmeringsmiljøer
+Jeg liker at TAB tilsvarer fire mellomrom.
+#+begin_src emacs-lisp
+  (setq-default tab-width 4)
+#+end_src
+Viser CamelCase-symboler som distinkte ord over alt:
+#+begin_src emacs-lisp
+  (use-package subword
+    :config
+    (global-subword-mode 1))
+#+end_src
+** JavaScript, TypeScript, JSON
+Naviger i JSON-dokumenter hierarkisk med =json-navigator-navigate-after-point=.
+#+begin_src emacs-lisp
+  (use-package json-navigator
+    :commands
+    (json-navigator-navigate-after-point))
+#+end_src
+** Emacs Lisp
+Bruk =eldoc-mode= til å vise dokumentasjon.
+#+begin_src emacs-lisp
+  (use-package eldoc
+	:hook
+	(emacs-lisp-mode . eldoc-mode))
+#+end_src
+
 
