@@ -26,3 +26,13 @@
 
   (setq-default line-spacing 0.12)
 #+end_src
+
+* Pakkehåndtering
+#+begin_src emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+  (eval-and-compile
+    (setq use-package-always-ensure t
+	  use-package-expand-minimally t))
+#+end_src
