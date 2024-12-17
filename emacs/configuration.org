@@ -3,6 +3,7 @@
 #+author: Arne Magnus Tveita Løken
 #+options: toc:2
 
+* Innholdsfortegnelse :toc:
 
 * Pakkehåndtering
 ** Legg til pakkebrønner, og installer =use-package=
@@ -208,3 +209,21 @@ Bruk =eldoc-mode= til å vise dokumentasjon.
 #+end_src
 
 
+* Oppgavehåndtering med =org-mode=
+#+begin_src emacs-lisp
+  (use-package org
+	:custom
+	(initial-major-mode 'org-mode)
+
+	(org-auto-align-tags nil)
+	(org-footnote-auto-label nil)
+	(org-footnote-section nil)
+	(org-insert-heading-respect-context t)
+	(org-tags-column 0))
+#+end_src
+Å tillegge =org-tempo= muliggjør snarveier i Org-mode.
+#+begin_src emacs-lisp
+  (require 'org-tempo)
+  (add-to-list 'org-structure-template-alist
+			   '("el" . "src emacs-lisp"))
+#+end_src
