@@ -248,3 +248,18 @@ Hurtigtasten =C-c e= åpner Emacs-konfigurasjonsdokumentet:
 
   (global-set-key (kbd "C-c e") '+visit-emacs-config)
 #+end_src
+
+* Python
+#+begin_src emacs-lisp
+  (use-package conda
+	:init
+	(conda-env-initialize-interactive-shells)
+	(conda-env-initialize-eshell)
+	(conda-env-autoactivate-mode t)
+	(conda-mode-line-setup)
+	:config
+	(setq conda-anaconda-home (getenv "CONDA_HOME")
+		  conda-env-home-directory (getenv "CONDA_HOME")
+		  conda-env-subdirectory "envs"
+		  python-shell-interpreter "python"))
+#+end_src
