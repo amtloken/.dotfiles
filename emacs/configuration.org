@@ -4,6 +4,32 @@
 #+options: toc:2
 
 * Innholdsfortegnelse :toc:
+- [[#pakkehåndtering][Pakkehåndtering]]
+  - [[#legg-til-pakkebrønner-og-installer-use-package][Legg til pakkebrønner, og installer =use-package=]]
+  - [[#autokompiler-og-bruk-nyeste-pakkevariant][Autokompiler og bruk nyeste pakkevariant]]
+  - [[#fjern-advarsler-om-cl-biblioteket][Fjern advarsler om =cl=-biblioteket]]
+- [[#fonter][Fonter]]
+  - [[#midlertidig-justering-av-fonter][Midlertidig justering av fonter]]
+- [[#filenkoding][Filenkoding]]
+- [[#evil-mode][=evil-mode=]]
+- [[#prosjekthåndtering][Prosjekthåndtering]]
+  - [[#magit][=magit=]]
+  - [[#undo-tree][=undo-tree=]]
+- [[#programmeringsmiljøer][Programmeringsmiljøer]]
+  - [[#javascript-typescript-json][JavaScript, TypeScript, JSON]]
+  - [[#emacs-lisp][Emacs Lisp]]
+- [[#oppgavehåndtering-med-org-mode][Oppgavehåndtering med =org-mode=]]
+- [[#all-the-icons][=all-the-icons=]]
+- [[#globale-innstillinger][Globale innstillinger]]
+  - [[#besøk-emacs-konfigurasjonsdokument][Besøk Emacs-konfigurasjonsdokument]]
+- [[#python][Python]]
+- [[#company][Company]]
+- [[#org-mode][=Org-mode=]]
+  - [[#agenda][Agenda]]
+  - [[#org-bullets][Org bullets]]
+  - [[#org-level-headers][Org Level Headers]]
+  - [[#preserve-indentation-on-org-babel-tangle][Preserve Indentation on Org-Babel-Tangle]]
+  - [[#toc-org][Toc-Org]]
 
 * Pakkehåndtering
 ** Legg til pakkebrønner, og installer =use-package=
@@ -281,4 +307,38 @@ Hurtigtasten =C-c e= åpner Emacs-konfigurasjonsdokumentet:
 	:after company
 	:diminish
 	:hook (company-mode . company-box-mode))
+#+end_src
+
+* =Org-mode=
+** Agenda
+#+begin_src emacs-lisp
+  (setq org-agenda-files '("~/Org/agenda.org"))
+#+end_src
+** Org bullets
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (use-package org-bullets
+	:init
+	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+** Org Level Headers
+#+begin_src emacs-lisp
+  (custom-set-faces
+   '(org-level-1 ((t (:inherit-outline-1 :height 1.7))))
+   '(org-level-2 ((t (:inherit-outline-2 :height 1.6))))
+   '(org-level-3 ((t (:inherit-outline-3 :height 1.5))))
+   '(org-level-4 ((t (:inherit-outline-4 :height 1.4))))
+   '(org-level-5 ((t (:inherit-outline-5 :height 1.3))))
+   '(org-level-6 ((t (:inherit-outline-5 :height 1.2))))
+   '(org-level-7 ((t (:inherit-outline-5 :height 1.1)))))
+#+end_src
+** Preserve Indentation on Org-Babel-Tangle
+#+begin_src emacs-lisp
+  (setq org-src-preserve-indentation t)
+#+end_src
+** Toc-Org
+#+begin_src emacs-lisp
+  (use-package toc-org
+	:commands toc-org-enable
+	:init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
