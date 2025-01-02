@@ -34,6 +34,8 @@
 - [[#rainbow-delimiters][Rainbow delimiters]]
 - [[#ivy][Ivy]]
 - [[#diminish][Diminish]]
+- [[#pretty-symbols][Pretty symbols]]
+- [[#highlight-current-line][Highlight current line]]
 
 * Pakkehåndtering
 ** Legg til pakkebrønner, og installer =use-package=
@@ -400,4 +402,18 @@ Hurtigtasten =C-c e= åpner Emacs-konfigurasjonsdokumentet:
 Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
 #+begin_src emacs-lisp
 (use-package diminish)
+#+end_src
+
+* Pretty symbols
+#+begin_src emacs-lisp
+(when window-system
+  (use-package pretty-mode
+	:config
+	(global-pretty-mode t)))
+#+end_src
+
+* Highlight current line
+#+begin_src emacs-lisp
+(when window-system
+  (add-hook 'prog-mode-hook 'hl-line-mode))
 #+end_src
