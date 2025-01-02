@@ -36,6 +36,7 @@
 - [[#diminish][Diminish]]
 - [[#pretty-symbols][Pretty symbols]]
 - [[#highlight-current-line][Highlight current line]]
+- [[#which-key][Which key]]
 
 * Pakkehåndtering
 ** Legg til pakkebrønner, og installer =use-package=
@@ -416,4 +417,11 @@ Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
 #+begin_src emacs-lisp
 (when window-system
   (add-hook 'prog-mode-hook 'hl-line-mode))
+#+end_src
+
+* Which key
+#+begin_src emacs-lisp
+(use-package which-key
+  :config
+  (which-key-mode))
 #+end_src
