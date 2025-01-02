@@ -30,6 +30,7 @@
   - [[#org-level-headers][Org Level Headers]]
   - [[#preserve-indentation-on-org-babel-tangle][Preserve Indentation on Org-Babel-Tangle]]
   - [[#toc-org][Toc-Org]]
+- [[#rainbow-delimiters][Rainbow delimiters]]
 
 * Pakkehåndtering
 ** Legg til pakkebrønner, og installer =use-package=
@@ -341,4 +342,10 @@ Hurtigtasten =C-c e= åpner Emacs-konfigurasjonsdokumentet:
   (use-package toc-org
 	:commands toc-org-enable
 	:init (add-hook 'org-mode-hook 'toc-org-enable))
+#+end_src
+* Rainbow delimiters
+#+begin_src emacs-lisp
+(use-package rainbow-delimniters
+  :config
+  (rainbow-delimiters-mode))
 #+end_src
