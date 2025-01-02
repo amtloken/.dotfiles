@@ -20,6 +20,7 @@
   - [[#emacs-lisp][Emacs Lisp]]
 - [[#oppgavehåndtering-med-org-mode][Oppgavehåndtering med =org-mode=]]
 - [[#all-the-icons][=all-the-icons=]]
+- [[#fargetema][Fargetema]]
 - [[#globale-innstillinger][Globale innstillinger]]
   - [[#besøk-emacs-konfigurasjonsdokument][Besøk Emacs-konfigurasjonsdokument]]
 - [[#python][Python]]
@@ -272,6 +273,17 @@ Bruk =eldoc-mode= til å vise dokumentasjon.
   (use-package all-the-icons-dired
 	:hook
 	(dired-mode . (lambda() (all-the-icons-dired-mode t))))
+#+end_src
+
+* Fargetema
+#+begin_src emacs-lisp
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t)
+  (load-theme 'doom-one t)
+  (doom-themes-neotree-config)
+  (doom-themes-org-config))
 #+end_src
 
 * Globale innstillinger
