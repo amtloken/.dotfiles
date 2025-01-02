@@ -38,6 +38,7 @@
 - [[#pretty-symbols][Pretty symbols]]
 - [[#highlight-current-line][Highlight current line]]
 - [[#which-key][Which key]]
+- [[#projectile][Projectile]]
 
 * Pakkehåndtering
 ** Legg til pakkebrønner, og installer =use-package=
@@ -432,4 +433,11 @@ fila under redigering befinner seg.
 (use-package which-key
   :config
   (which-key-mode))
+#+end_src
+
+* Projectile
+#+begin_src emacs-lisp
+(use-package projectile
+  :config
+  (projectile-mode 1))
 #+end_src
