@@ -39,6 +39,7 @@
 - [[#highlight-current-line][Highlight current line]]
 - [[#which-key][Which key]]
 - [[#projectile][Projectile]]
+- [[#neotree][Neotree]]
 
 * Pakkehåndtering
 ** Legg til pakkebrønner, og installer =use-package=
@@ -440,4 +441,23 @@ fila under redigering befinner seg.
 (use-package projectile
   :config
   (projectile-mode 1))
+#+end_src
+
+* Neotree
+#+begin_src emacs-lisp
+(use-package neotree
+  :config
+  (setq neo-smart-open t
+	neo-show-hidden-files t
+	neo-window-width 55
+	neo-window-fixed-size nil
+	inhibit-compacting-font-caches t
+	projectile-switch-project-action 'neotree-projectile-action)
+  (add-hook 'neo-after-create-hook
+	    #'(lambda (_)
+		(with-current-buffer (get-buffer neo-buffer-name)
+		  (setq truncate-lines t)
+		  (setq word-wrap nil)
+		  (make-local-variable 'auto-hscroll-mode)
+		  (setq auto-hscroll-mode nil)))))
 #+end_src
