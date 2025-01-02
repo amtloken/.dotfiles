@@ -27,10 +27,13 @@
 - [[#org-mode][=Org-mode=]]
   - [[#agenda][Agenda]]
   - [[#org-bullets][Org bullets]]
+  - [[#diminish-org-indent][Diminish org indent]]
   - [[#org-level-headers][Org Level Headers]]
   - [[#preserve-indentation-on-org-babel-tangle][Preserve Indentation on Org-Babel-Tangle]]
   - [[#toc-org][Toc-Org]]
 - [[#rainbow-delimiters][Rainbow delimiters]]
+- [[#ivy][Ivy]]
+- [[#diminish][Diminish]]
 
 * Pakkehåndtering
 ** Legg til pakkebrønner, og installer =use-package=
@@ -322,6 +325,10 @@ Hurtigtasten =C-c e= åpner Emacs-konfigurasjonsdokumentet:
 	:init
 	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
+** Diminish org indent
+#+begin_src emacs-lisp
+(eval-after-load 'org-indent '(diminish 'org-indent-mode))
+#+end_src
 ** Org Level Headers
 #+begin_src emacs-lisp
   (custom-set-faces
@@ -345,7 +352,52 @@ Hurtigtasten =C-c e= åpner Emacs-konfigurasjonsdokumentet:
 #+end_src
 * Rainbow delimiters
 #+begin_src emacs-lisp
-(use-package rainbow-delimniters
+(use-package rainbow-delimiters
   :config
   (rainbow-delimiters-mode))
+#+end_src
+
+* Ivy
+#+begin_src emacs-lisp
+(use-package counsel
+  :after ivy
+  :diminish
+  :config
+  (counsel-mode)
+  (setq ivy-initial-inputs-alist nil)) ;; removes starting ^ regex in M-x
+
+(use-package ivy
+  :bind
+  ;; ivy-resume resumes the last Ivy-based completion
+  (("C-c C-r" . ivy-resume)
+   ("C-x B" . ivy-switch-buffer-other-window))
+  :diminish
+  :custom
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq enable-recursive-minibuffers t)
+  :config
+  (ivy-mode))
+
+(use-package all-the-icons-ivy-rich
+  :init
+  (all-the-icons-ivy-rich-mode 1))
+
+(use-package ivy-rich
+  :after ivy
+  :init
+  (ivy-rich-mode 1) ;; This gets us descriptions in M-x
+  :custom
+  (ivy-virtual-abbreviate 'full
+						  ivy-rich-switch-buffer-align-virtual-buffer t
+						  ivy-rich-path-style 'abbrev)
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer
+							   'ivy-rich-switch-buffer-transformer))
+#+end_src
+
+* Diminish
+Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
+#+begin_src emacs-lisp
+(use-package diminish)
 #+end_src
