@@ -1,3 +1,19 @@
+#  README file for my config file repo.
+#  Copyright (C) 2025 Arne Magnus Tveita Løken
+# 
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Pulic License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+# 
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+# 
+#  You should have received a copy of the GNU General Public License
+#  along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 #+title: Arnes Dotfiles
 #+author: Arne Magnus Tveita Løken
 #+options: toc:2
@@ -10,4 +26,7 @@
 Dotfiler er konfigurasjonsfiler som brukes til å personliggjøre Linux- og Unixbaserte systemer. Navnet `dotfiler' kommer av at filnavnet begynner med et punktum -- en dot. Punktumet først i fil- eller katalognavnet indikerer at det er en gjemt fil eller ei gjemt mappe. Dette repoet inneholder mine personlige dotfiler. De lagres her av bekvemmelighetsårsaker slik at jeg enkelt kan få tilgang til dem på nye maskiner eller nye installasjoner. Eventuelt kan også andre potensielt hente inspirasjon fra dem til sin egen konfigurasjon.
 
 * Lisensiering
-Filene i dette repoet er lisensiert under MIT-lisensen, som er en svært liberal lisens. Denne muliggjør bruk, kopiering, distribusjon, salg, med videre, av programvaren. Med andre ord, gjør med den hva du selv ønsker. Det eneste kravet MIT-lisensen påtrykker er at lisensen og oppahvsrettsnotisen tilgjengeliggjøres sammen med programvaren.
+Filene i dette repoet er lisensiert under GPLv3, som er en svært liberal lisens.
+Denne muliggjør bruk, kopiering, endring, distribusjon, salg, mv. av
+programvaren. For ytterligere detaljer, se lisensfila eller
+<https://www.gnu.org/licenses/>.
