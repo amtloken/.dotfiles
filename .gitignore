@@ -18,16 +18,16 @@
 *~
 
 # Elisp and Emacs temp files
-emacs/*.el*
-emacs/*~
+.config/emacs/*.el*
+.config/emacs/*~
 
 # Folder structure from running Emacs(client)
-emacs/auto-save-list/
-emacs/elpa/
-emacs/eshell/
-emacs/org-persist/
-emacs/server/
-emacs/transient/
+.config/emacs/auto-save-list/
+.config/emacs/elpa/
+.config/emacs/eshell/
+.config/emacs/org-persist/
+.config/emacs/server/
+.config/emacs/transient/
 
 # Git
 git/allowed_signers
