@@ -1,0 +1,545 @@
+#  Emacs configuration file, written in ORG-mode. 
+#  Copyright (C) 2025 Arne Magnus Tveita Løken
+# 
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Pulic License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+# 
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+# 
+#  You should have received a copy of the GNU General Public License
+#  along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+# -*- coding: utf-8 -*-
+#+title: Konfigurasjonsdokument for GNU Emacs
+#+author: Arne Magnus Tveita Løken
+#+options: toc:2
+
+* Innholdsfortegnelse :toc:
+- [[#pakkehåndtering][Pakkehåndtering]]
+  - [[#legg-til-pakkebrønner-og-installer-use-package][Legg til pakkebrønner, og installer =use-package=]]
+  - [[#autokompiler-og-bruk-nyeste-pakkevariant][Autokompiler og bruk nyeste pakkevariant]]
+  - [[#fjern-advarsler-om-cl-biblioteket][Fjern advarsler om =cl=-biblioteket]]
+- [[#fonter][Fonter]]
+  - [[#midlertidig-justering-av-fonter][Midlertidig justering av fonter]]
+- [[#filenkoding][Filenkoding]]
+- [[#evil-mode][=evil-mode=]]
+- [[#prosjekthåndtering][Prosjekthåndtering]]
+  - [[#magit][=magit=]]
+  - [[#undo-tree][=undo-tree=]]
+- [[#programmeringsmiljøer][Programmeringsmiljøer]]
+  - [[#javascript-typescript-json][JavaScript, TypeScript, JSON]]
+  - [[#emacs-lisp][Emacs Lisp]]
+- [[#oppgavehåndtering-med-org-mode][Oppgavehåndtering med =org-mode=]]
+- [[#all-the-icons][=all-the-icons=]]
+- [[#fargetema][Fargetema]]
+- [[#globale-innstillinger][Globale innstillinger]]
+  - [[#besøk-emacs-konfigurasjonsdokument][Besøk Emacs-konfigurasjonsdokument]]
+- [[#python][Python]]
+- [[#company][Company]]
+- [[#org-mode][=Org-mode=]]
+  - [[#agenda][Agenda]]
+  - [[#org-bullets][Org bullets]]
+  - [[#diminish-org-indent][Diminish org indent]]
+  - [[#org-level-headers][Org Level Headers]]
+  - [[#preserve-indentation-on-org-babel-tangle][Preserve Indentation on Org-Babel-Tangle]]
+  - [[#toc-org][Toc-Org]]
+- [[#rainbow-delimiters][Rainbow delimiters]]
+- [[#ivy][Ivy]]
+- [[#diminish][Diminish]]
+- [[#backup][Backup]]
+- [[#pretty-symbols][Pretty symbols]]
+- [[#highlight-current-line][Highlight current line]]
+- [[#which-key][Which key]]
+- [[#projectile][Projectile]]
+- [[#neotree][Neotree]]
+- [[#general-keybindings][General keybindings]]
+
+* Pakkehåndtering
+** Legg til pakkebrønner, og installer =use-package=
+#+begin_src emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
+  (package-initialize)
+
+  (defun package--save-selected-packages (&rest opt) nil)
+  
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+  (eval-and-compile
+    (setq use-package-always-ensure t
+	  use-package-expand-minimally t))
+#+end_src
+** Autokompiler og bruk nyeste pakkevariant
+#+begin_src emacs-lisp
+  (use-package auto-compile
+    :demand t
+    :config (auto-compile-on-load-mode))
+
+  (setq load-prefer-newer t)
+#+end_src
+** Fjern advarsler om =cl=-biblioteket
+=cl= er utdatert, men mange pakker bruker det fortsatt. Dette er utenfor min kontroll, men jeg velger å undertrykke advarslene.
+#+begin_src emacs-lisp
+  (setq byte-compile-warnings '(cl-functions))
+#+end_src
+
+* Fonter
+Fontjustering legges til en egen funksjon som kalles etter å ha laget en frame, for å sikre at dette også fungerer som ønsket i daemonmodus.
+#+begin_src emacs-lisp
+  (defun amtl-after-frame (frame)
+    (if (display-graphic-p frame)
+	(progn
+	  (add-to-list 'default-frame-alist '(font . "Source Code Pro-11"))
+	  (set-face-attribute 'default nil
+			      :font "Source Code Pro"
+			      :height 110
+			      :weight 'medium)
+	  (set-face-attribute 'variable-pitch nil
+			      :font "Source Serif 4 Medium"
+			      :height 120
+			      :weight 'medium)
+	  (set-face-attribute 'fixed-pitch nil
+			      :font "Source Code Pro"
+			      :height 110
+			      :weight 'medium)
+	  (set-face-attribute 'font-lock-comment-face nil
+			      :slant 'italic)
+	  (set-face-attribute 'font-lock-keyword-face nil
+			      :slant 'italic)
+	  (setq-default line-spacing 0.12))))
+
+  (mapc 'amtl-after-frame (frame-list))
+  (add-hook 'after-make-frame-functions 'amtl-after-frame)
+#+end_src
+
+** Midlertidig justering av fonter
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-+") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+#+end_src
+
+* Filenkoding
+#+begin_src emacs-lisp
+  (setq locale-coding-system 'utf-8)
+  (set-language-environment "UTF-8")
+  (set-terminal-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-selection-coding-system 'utf-8)
+#+end_src
+
+* =evil-mode=
+#+begin_src emacs-lisp
+  (use-package evil
+    :after undo-tree
+
+    :init
+    (setq evil-respect-visual-line-mode t
+	  evil-undo-system 'undo-tree
+	  evil-want-abbrev-expand-on-insert-exit nil
+	  evil-want-keybinding nil)
+
+    :config
+    (evil-mode 1))
+#+end_src
+Installer =evil-collection=, som tilbyr evil-vennlige hurtigtaster for mange modi.
+#+begin_src emacs-lisp
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+#+end_src
+Anvend =evil-surround= overalt.
+#+begin_src emacs-lisp
+  (use-package evil-surround
+    :after evil
+    :config
+    (global-evil-surround-mode 1))
+#+end_src
+Anvend =evil= med Org-agendaer.
+#+begin_src emacs-lisp
+  (use-package evil-org
+    :after (evil org)
+    :config
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys))
+#+end_src
+
+* Prosjekthåndtering
+** =magit=
+#+begin_src emacs-lisp
+  (use-package magit
+    :ensure-system-package git
+    :bind ("C-x g" . magit-status)
+
+    :config
+    (use-package magit-section)
+    (use-package with-editor)
+
+    (require 'git-rebase)
+
+    (defun +get-author-parse-line (key value domain)
+      (let * ((values (mapchar #'s-trim (s-split ";" value)))
+	      (name (car values))
+	      (email (or (cadr values) key)))
+	   (format "%s <%s@%s>" name email domain)))
+
+    (defun +git-authors ()
+      (let * ((config (yaml-parse-string (f-read-text "~/.git-authors")))
+	      (domain (gethash 'domain (gethash 'email config)))
+	      (authors '()))
+	   (+maphash (lambda (k v) (+git-author-parse-line k v domain))
+		     (gethash 'authors config))))
+
+    (defun +insert-git-coauthor ()
+      "Prompt for co-author and insert a co-authored-by block."
+      (interactive)
+      (insert (format "Co-authored by: %s\n"
+		      (completing-read "Co-authored by:" (+git-authors)))))
+
+    (setq git-commit-summary-max-length 50
+	  magit-bury-buffer-function 'magit-restore-window-configuration
+	  magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1))
+#+end_src
+** =undo-tree=
+#+begin_src emacs-lisp
+  (use-package undo-tree
+    :config
+    (setq undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory "undo-tree"))))
+    (global-undo-tree-mode)
+
+    (defun +undo-tree-suppress-undo-history-saved-message (undo-tree-save-history &rest args)
+      "Suppress the message saying that the undo history file was saved (because this happens every single time you save a file)."
+      (let ((inhibit-message t))
+	(apply undo-tree-save-history args)))
+
+    (defun +undo-tree-suppress-buffer-modified-message (undo-tree-load-history &rest args)
+      "Suppress the message saying that the undo history could not be loaded because the file changed outside of Emacs."
+      (let ((inhibit-message t))
+	(apply undo-tree-load-history args)))
+
+    (advice-add #'undo-tree-load-history :around
+		#'+undo-tree-suppress-undo-history-saved-message)
+
+    (advice-add #'undo-tree-load-history :around
+		#'+undo-tree-suppress-buffer-modified-message))
+#+end_src
+
+* Programmeringsmiljøer
+Jeg liker at TAB tilsvarer fire mellomrom.
+#+begin_src emacs-lisp
+  (setq-default tab-width 4)
+#+end_src
+Viser CamelCase-symboler som distinkte ord over alt:
+#+begin_src emacs-lisp
+  (use-package subword
+    :config
+    (global-subword-mode 1))
+#+end_src
+** JavaScript, TypeScript, JSON
+Naviger i JSON-dokumenter hierarkisk med =json-navigator-navigate-after-point=.
+#+begin_src emacs-lisp
+  (use-package json-navigator
+    :commands
+    (json-navigator-navigate-after-point))
+#+end_src
+** Emacs Lisp
+Bruk =eldoc-mode= til å vise dokumentasjon.
+#+begin_src emacs-lisp
+  (use-package eldoc
+	:hook
+	(emacs-lisp-mode . eldoc-mode))
+#+end_src
+
+
+* Oppgavehåndtering med =org-mode=
+#+begin_src emacs-lisp
+  (use-package org
+	:custom
+	(initial-major-mode 'org-mode)
+
+	(org-auto-align-tags nil)
+	(org-footnote-auto-label nil)
+	(org-footnote-section nil)
+	(org-insert-heading-respect-context t)
+	(org-tags-column 0))
+#+end_src
+Å tillegge =org-tempo= muliggjør snarveier i Org-mode.
+#+begin_src emacs-lisp
+  (require 'org-tempo)
+  (add-to-list 'org-structure-template-alist
+			   '("el" . "src emacs-lisp"))
+#+end_src
+
+* =all-the-icons=
+#+begin_src emacs-lisp
+  (use-package all-the-icons
+	:if (display-graphic-p))
+
+  (use-package all-the-icons-dired
+	:hook
+	(dired-mode . (lambda() (all-the-icons-dired-mode t))))
+#+end_src
+
+* Fargetema
+#+begin_src emacs-lisp
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t)
+  (load-theme 'doom-one t)
+  (doom-themes-neotree-config)
+  (doom-themes-org-config))
+#+end_src
+
+* Globale innstillinger
+** Besøk Emacs-konfigurasjonsdokument
+Hurtigtasten =C-c e= åpner Emacs-konfigurasjonsdokumentet:
+#+begin_src emacs-lisp
+  (defun +visit-emacs-config ()
+	(interactive)
+	(find-file (concat user-emacs-directory "configuration.org")))
+
+  (global-set-key (kbd "C-c e") '+visit-emacs-config)
+#+end_src
+
+* Python
+#+begin_src emacs-lisp
+  (use-package conda
+	:init
+	(conda-env-initialize-interactive-shells)
+	(conda-env-initialize-eshell)
+	(conda-env-autoactivate-mode t)
+	(conda-mode-line-setup)
+	:config
+	(setq conda-anaconda-home (getenv "CONDA_HOME")
+		  conda-env-home-directory (getenv "CONDA_HOME")
+		  conda-env-subdirectory "envs"
+		  python-shell-interpreter "python"))
+#+end_src
+
+* Company
+#+begin_src emacs-lisp
+  (use-package company
+	:defer 2
+	:diminish
+	:custom
+	(company-begin-commands '(self-insert-command))
+	(company-idle-delay .1)
+	(company-minimum-prefix-length 2)
+	(company-show-numbers t)
+	(company-tooltip-align-annotations 't)
+	(global-company-mode t))
+
+  (use-package company-box
+	:after company
+	:diminish
+	:hook (company-mode . company-box-mode))
+#+end_src
+
+* =Org-mode=
+** Agenda
+#+begin_src emacs-lisp
+  (setq org-agenda-files '("~/Org/agenda.org"))
+#+end_src
+** Org bullets
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (use-package org-bullets
+	:init
+	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+** Diminish org indent
+#+begin_src emacs-lisp
+(eval-after-load 'org-indent '(diminish 'org-indent-mode))
+#+end_src
+** Org Level Headers
+#+begin_src emacs-lisp
+  (custom-set-faces
+   '(org-level-1 ((t (:inherit-outline-1 :height 1.7))))
+   '(org-level-2 ((t (:inherit-outline-2 :height 1.6))))
+   '(org-level-3 ((t (:inherit-outline-3 :height 1.5))))
+   '(org-level-4 ((t (:inherit-outline-4 :height 1.4))))
+   '(org-level-5 ((t (:inherit-outline-5 :height 1.3))))
+   '(org-level-6 ((t (:inherit-outline-5 :height 1.2))))
+   '(org-level-7 ((t (:inherit-outline-5 :height 1.1)))))
+#+end_src
+** Preserve Indentation on Org-Babel-Tangle
+#+begin_src emacs-lisp
+  (setq org-src-preserve-indentation t)
+#+end_src
+** Toc-Org
+#+begin_src emacs-lisp
+  (use-package toc-org
+	:commands toc-org-enable
+	:init (add-hook 'org-mode-hook 'toc-org-enable))
+#+end_src
+* Rainbow delimiters
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :config
+  (rainbow-delimiters-mode))
+#+end_src
+
+* Ivy
+#+begin_src emacs-lisp
+(use-package counsel
+  :after ivy
+  :diminish
+  :config
+  (counsel-mode)
+  (setq ivy-initial-inputs-alist nil)) ;; removes starting ^ regex in M-x
+
+(use-package ivy
+  :bind
+  ;; ivy-resume resumes the last Ivy-based completion
+  (("C-c C-r" . ivy-resume)
+   ("C-x B" . ivy-switch-buffer-other-window))
+  :diminish
+  :custom
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq enable-recursive-minibuffers t)
+  :config
+  (ivy-mode))
+
+(use-package all-the-icons-ivy-rich
+  :init
+  (all-the-icons-ivy-rich-mode 1))
+
+(use-package ivy-rich
+  :after ivy
+  :init
+  (ivy-rich-mode 1) ;; This gets us descriptions in M-x
+  :custom
+  (ivy-virtual-abbreviate 'full
+						  ivy-rich-switch-buffer-align-virtual-buffer t
+						  ivy-rich-path-style 'abbrev)
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer
+							   'ivy-rich-switch-buffer-transformer))
+#+end_src
+
+* Diminish
+Pakke som gjemmer eller forkorter modelinje-visninger av minor modes.
+#+begin_src emacs-lisp
+(use-package diminish)
+#+end_src
+
+* Backup
+Flytter automatiske backup-filer til et dedikert sted, heller enn hvor enn
+fila under redigering befinner seg.
+#+begin_src emacs-lisp
+(setq backup-directory-alist '((".*" . "~/.local/share/Trash/files")))
+#+end_src
+
+* Pretty symbols
+#+begin_src emacs-lisp
+(when window-system
+  (use-package pretty-mode
+	:config
+	(global-pretty-mode t)))
+#+end_src
+
+* Highlight current line
+#+begin_src emacs-lisp
+(when window-system
+  (add-hook 'prog-mode-hook 'hl-line-mode))
+#+end_src
+
+* Which key
+#+begin_src emacs-lisp
+(use-package which-key
+  :config
+  (which-key-mode))
+#+end_src
+
+* Projectile
+#+begin_src emacs-lisp
+(use-package projectile
+  :config
+  (projectile-mode 1))
+#+end_src
+
+* Neotree
+#+begin_src emacs-lisp
+(use-package neotree
+  :config
+  (setq neo-smart-open t
+	neo-show-hidden-files t
+	neo-window-width 55
+	neo-window-fixed-size nil
+	inhibit-compacting-font-caches t
+	projectile-switch-project-action 'neotree-projectile-action)
+  (add-hook 'neo-after-create-hook
+	    #'(lambda (_)
+		(with-current-buffer (get-buffer neo-buffer-name)
+		  (setq truncate-lines t)
+		  (setq word-wrap nil)
+		  (make-local-variable 'auto-hscroll-mode)
+		  (setq auto-hscroll-mode nil)))))
+#+end_src
+
+* General keybindings
+#+begin_src emacs-lisp
+(use-package general
+  :config
+  (general-evil-setup)
+
+  ;; Set up 'SPC' as the global leader key
+  (general-create-definer amtl/leader-keys
+	:states '(normal insert visual emacs)
+	:keymaps 'override
+	:prefix "SPC" ;; set leader
+	:global-prefix "M-SPC") ;; access leader in insert mode
+
+  (amtl/leader-keys
+    "SPC" '(counsel-M-x :wk "Counsel M-x")
+    "." '(find-file :ek "Find file")
+    "=" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
+    "TAB TAB" '(comment-line :wk "Comment lines")
+    "u" '(universal-argument :wk "Universal argument"))
+
+  (amtl/leader-keys
+    "b" '(:ignore t :wk "Bookmarks/Buffers")
+    "b b" '(switch-to-buffer :wk "Switch to buffer")
+    "b c" '(clone-indirect-buffer :wk "Create indirect buffer copy in a split")
+    "b C" '(clone-indirect-buffer-other-window :wk "Clone indirect buffer in new window")
+    "b d" '(bookmark-delete :wk "Delete bookmark")
+    "b i" '(ibuffer :wk "Ibuffer")
+    "b k" '(kill-current-buffer :wk "Kill current buffer")
+    "b K" '(kill-some-buffers :wk "Kill multiple buffers")
+    "b l" '(list-bookmarks :wk "List bookmarks")
+    "b m" '(bookmark-set :wk "Set bookmark")
+    "b n" '(next-buffer :wk "Next buffer")
+    "b p" '(previous-buffer :wk "Previous buffer")
+    "b r" '(revert-buffer :wk "Reload buffer")
+    "b R" '(rename-buffer :wk "Rename buffer")
+    "b s" '(basic-save-buffer :wk "Save buffer")
+    "b S" '(save-some-buffers :wk "Save multiple buffers")
+    "b w" '(bookmark-save :wk "Save current bookmarks to bookmark file"))
+  
+  (amtl/leader-keys
+    "d" '(:ignore t :wk "Dired")
+    "d d" '(dired :wk "Open dired")
+    "d f" '(wdired-finish-edit :wk "Write dired finish edit")
+    "d j" '(dired-jump :wk "Dired jump to current")
+    "d n" '(neotree-dir :wk "Open directory in neotree")
+    "d p" '(peep-dired :wk "Peep-dired")
+    "d w" '(wdired-change-do-wdired-mode :wk "Writable dired"))
+
+  
+  
+  )
+#+end_src
