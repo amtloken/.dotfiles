@@ -7,6 +7,121 @@
 
 ** Sourcing the scripts
 #+begin_src emacs-lisp
-  (require 'elpaca-setup) ;; The Elpaca Package Manager
+  (require 'elpaca-setup)  ;; The Elpaca Package Manager
+  (require 'buffer-move)   ;; Buffer-move for better window management 
   (require 'eshell-prompt) ;; A fancy prompt for eshell
+#+end_src
+
+* ALL THE ICONS
+This is an icon set that can be used with dashboard, dired, ibuffer, and other Emacs programs.
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons
+    :ensure t
+    :if (display-graphic-p))
+
+  (use-package all-the-icons-dired
+    :hook (dired-mode . (lambda () (all-the-icons-dired-mode t)=)))
+#+end_src
+
+* BACKUP
+By default, Emacs creates automatic backups of files in their original directories, such as `file.el` and the backup `file.el~`. This leads to a lot of clutter, so let's tell Emacs to put all backups that it creates in the =TRASH= directory.
+#+begin_src emacs-lisp
+  (setq backup-directory-alist '((".*" . "~/.local/share/Trash/files")))
+#+end_src
+
+* COMPANY
+[[https://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete anything".  Completion will start automatically after you type a few letters. Use M-n and M-p to select, <return> to complete or <tab> to complete the common part.
+
+#+begin_src emacs-lisp
+  (use-package company
+    :defer 2
+    :diminish
+    :custom
+    (company-begin-commands '(self-insert-command))
+    (company-idle-delay .1)
+    (company-minimum-prefix-length 2)
+    (company-show-numbers t)
+    (company-tooltip-align-annotations 't)
+    (global-company-mode t))
+
+  (use-package company-box
+    :after company
+    :diminish
+    :hook (company-mode . company-box-mode))
+#+end_src
+
+* DIMINISH
+This package implements hiding or abbreviation of the modeline displays (lighters) of minor-modes.  With this package installed, you can add ':diminish' to any use-package block to hide that particular mode in the modeline.
+
+#+begin_src emacs-lisp
+  (use-package diminish)
+#+end_src
+
+* DIRED
+#+begin_src emacs-lisp
+  (use-package dired-open
+    :config
+    (setq dired-open-extensions '(("gif" . "sxiv")
+				  ("jpg" . "sxiv")
+				  ("png" . "sxiv")
+				  ("mkv" . "mpv")
+				  ("mp4" . "mpv"))))
+
+  (use-package peep-dired
+    :after dired
+    :hook (evil-normalize-keymaps . peep-dired-hook)
+    :config
+      (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
+      (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
+      (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
+      (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
+  )
+#+end_src
+
+* EVIL
+[[https://github.com/emacs-evil/evil][Evil]] is an extensible vi/vim layer for Emacs.  Because...let's face it.  The Vim keybindings are just plain better.
+
+#+begin_src emacs-lisp
+  ;; Expands to: (elpaca evil (use-package evil :demand t))
+  (use-package evil
+      :init      ;; tweak evil's configuration before loading it
+      (setq evil-want-integration t  ;; This is optional since it's already set to t by default.
+	    evil-want-keybinding nil
+	    evil-vsplit-window-right t
+	    evil-split-window-below t
+	    evil-undo-system 'undo-redo)  ;; Adds vim-like C-r redo functionality
+      (evil-mode))
+
+  (use-package evil-collection
+    :after evil
+    :config
+    ;; Do not uncomment this unless you want to specify each and every mode
+    ;; that evil-collection should works with.  The following line is here 
+    ;; for documentation purposes in case you need it.  
+    ;; (setq evil-collection-mode-list '(calendar dashboard dired ediff info magit ibuffer))
+    (add-to-list 'evil-collection-mode-list 'help) ;; evilify help mode
+    (evil-collection-init))
+
+  (use-package evil-tutor)
+
+  ;; Using RETURN to follow links in Org/Evil 
+  ;; Unmap keys in 'evil-maps if not done, (setq org-return-follows-link t) will not work
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "SPC") nil)
+    (define-key evil-motion-state-map (kbd "RET") nil)
+    (define-key evil-motion-state-map (kbd "TAB") nil))
+  ;; Setting RETURN key in org-mode to follow links
+    (setq org-return-follows-link  t)
+
+#+end_src
+
+
+* RAINBOW MODE
+Display the actual color as a background for any hex color value (ex. #ffffff).  The code block below enables rainbow-mode in all programming modes (prog-mode) as well as org-mode, which is why rainbow works in this document.  
+
+#+begin_src emacs-lisp
+  (use-package rainbow-mode
+    :diminish
+    :hook org-mode prog-mode)
 #+end_src
