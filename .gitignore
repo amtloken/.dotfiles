@@ -18,7 +18,7 @@
 *~
 
 # Elisp and Emacs temp files
-.config/emacs/*.el*
+.config/emacs/configuration.el
 .config/emacs/*~
 
 # Folder structure from running Emacs(client)
