@@ -22,6 +22,10 @@
 .config/emacs/\#*\#
 .config/emacs/*~
 
+# Elpaca archives
+.config/emacs/eln-cache/
+.config/emacs/elpaca/
+
 # Folder structure from running Emacs(client)
 .config/emacs/auto-save-list/
 .config/emacs/elpa/
