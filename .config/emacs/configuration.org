@@ -410,3 +410,10 @@ Display the actual color as a background for any hex color value (ex. #ffffff). 
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 #+end_src
+
+* TLDR
+
+#+begin_src emacs-lisp
+(use-package tldr)
+
+#+end_src
