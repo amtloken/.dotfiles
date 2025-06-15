@@ -14,29 +14,30 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#+title: Arnes =dotfiles=-konfigurasjon
+#+title: Arne's =dotfiles=
 #+author: Arne Magnus Tveita Løken
 #+options: toc:2
 
 * Innholdsfortegnelse :toc:
-- [[#hva-er-dette][Hva er dette?]]
-- [[#hvordan-bruke-disse][Hvordan bruke disse?]]
-- [[#lisensiering][Lisensiering]]
+- [[#what-are-these][What are these?]]
+- [[#how-to-use-these][How to use these?]]
+- [[#licensing][Licensing]]
 
-* Hva er dette?
-=dotfiles= er konfigurasjonsfiler som brukes til å personliggjøre Linux- og 
-Unixbaserte systemer. Navnet =dotfiles= kommer av at filnavnet begynner med et
-punktum -- en dot. Punktumet først i fil- eller katalognavnet indikerer at det
-er en gjemt fil eller ei gjemt mappe. Dette repoet inneholder mine personlige
-=dotfiles=. De lagres her av bekvemmelighetsårsaker, slik at jeg enkelt kan få
-tilgang til dem på nye maskiner, eller nye installasjoner. Eventuelt kan også
-andre potensielt hente inspirasjon fra dem til sin egen konfigurasjon.
+* What are these?
+=dotfiles= are configuration files used to personalize Linux- and Unix based
+systems. The name =dotfiles= stems from the file names starting with a dot.
+A leading dot in a file or folder name indicates that the file or folder is
+hidden. This repo contains my personal =dotfiles=. They are stored here for
+convenience, so that I can simply access them on new machines, or fresh 
+installs. Eventually, others may potentially find them inspirational for their
+own configurations.
 
-* Hvordan bruke disse?
+* How to use these?
+Key word: =GNU Stow=. It's like magic.
 Nøkkelord: =GNU Stow=. Rett og slett ren magi. 
 
-* Lisensiering
-Filene i dette repoet er lisensiert under GPLv3, som er en svært liberal lisens.
-Denne muliggjør bruk, kopiering, endring, distribusjon, salg, mv. av
-programvaren. For ytterligere detaljer, se lisensfila, eller
+* Licensing
+The files in this repo are licenses under GPLv3, which is a very liberal license.
+It facilitates use, copying, changing, distribution, sale, and more, of the 
+software. For further details, see the LICENSE file, or
 <https://www.gnu.org/licenses/>.
