@@ -43,7 +43,6 @@
 - [[#general-keybindings][GENERAL KEYBINDINGS]]
 - [[#git-programs][GIT PROGRAMS]]
   - [[#git-time-machine][Git Time Machine]]
-  - [[#magit][=magit=]]
 - [[#global-settings][GLOBAL SETTINGS]]
   - [[#visit-emacs-configuration-document][Visit Emacs configuration document]]
 - [[#highlight-current-line][HIGHLIGHT CURRENT LINE]]
@@ -73,8 +72,6 @@
 - [[#sane-defaults][SANE DEFAULTS]]
 - [[#shells-and-terminals][SHELLS AND TERMINALS]]
   - [[#eshell][Eshell]]
-  - [[#vterm][Vterm]]
-  - [[#vterm-toggle][Vterm-Toggle]]
 - [[#sudo-edit][SUDO EDIT]]
 - [[#theme][THEME]]
 - [[#tldr][TLDR]]
@@ -677,40 +674,6 @@ Install =luacheck= from your Linux distro's repositories for flycheck to work co
 #+end_src
 
 
-** =magit=
-#+begin_src emacs-lisp
-  (use-package magit
-    :bind ("C-x g" . magit-status)
-
-    :config
-    (use-package magit-section)
-    (use-package with-editor)
-
-    (require 'git-rebase)
-
-    (defun +get-author-parse-line (key value domain)
-      (let * ((values (mapchar #'s-trim (s-split ";" value)))
-	      (name (car values))
-	      (email (or (cadr values) key)))
-	   (format "%s <%s@%s>" name email domain)))
-
-    (defun +git-authors ()
-      (let * ((config (yaml-parse-string (f-read-text "~/.git-authors")))
-	      (domain (gethash 'domain (gethash 'email config)))
-	      (authors '()))
-	   (+maphash (lambda (k v) (+git-author-parse-line k v domain))
-		     (gethash 'authors config))))
-
-    (defun +insert-git-coauthor ()
-      "Prompt for co-author and insert a co-authored-by block."
-      (interactive)
-      (insert (format "Co-authored by: %s\n"
-		      (completing-read "Co-authored by:" (+git-authors)))))
-
-    (setq git-commit-summary-max-length 50
-	  magit-bury-buffer-function 'magit-restore-window-configuration
-	  magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1))
-#+end_src
 
 * GLOBAL SETTINGS
 ** Visit Emacs configuration document
@@ -1110,45 +1073,45 @@ Eshell is an Emacs 'shell' that is written in Elisp.
         eshell-visual-commands'("bash" "fish" "htop" "ssh" "top" "zsh"))
 #+end_src
 
-** Vterm
-Vterm is a terminal emulator within Emacs.  The 'shell-file-name' setting sets the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm.  By default, the shell is set to 'fish' but could change it to 'bash' or 'zsh' if you prefer.
+# ** Vterm
+# Vterm is a terminal emulator within Emacs.  The 'shell-file-name' setting sets the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm.  By default, the shell is set to 'fish' but could change it to 'bash' or 'zsh' if you prefer.
 
-#+begin_src emacs-lisp
-(use-package vterm
-  :ensure t
-  :config
-  (setq shell-file-name "/bin/sh"
-        vterm-max-scrollback 5000))
-#+end_src
+# #+begin_src emacs-lisp
+# (use-package vterm
+#   :ensure t
+#   :config
+#   (setq shell-file-name "/bin/sh"
+#         vterm-max-scrollback 5000))
+# #+end_src
 
-** Vterm-Toggle 
-[[https://github.com/jixiuf/vterm-toggle][vterm-toggle]] toggles between the vterm buffer and whatever buffer you are editing.
+# ** Vterm-Toggle 
+# [[https://github.com/jixiuf/vterm-toggle][vterm-toggle]] toggles between the vterm buffer and whatever buffer you are editing.
 
-#+begin_src emacs-lisp
-(use-package vterm-toggle
-  :ensure t
-  :after vterm
-  :config
-  ;; When running programs in Vterm and in 'normal' mode, make sure that ESC
-  ;; kills the program as it would in most standard terminal programs.
-  (evil-define-key 'normal vterm-mode-map (kbd "<escape>") 'vterm--self-insert)
-  (setq vterm-toggle-fullscreen-p nil)
-  (setq vterm-toggle-scope 'project)
-  (add-to-list 'display-buffer-alist
-               '((lambda (buffer-or-name _)
-                     (let ((buffer (get-buffer buffer-or-name)))
-                       (with-current-buffer buffer
-                         (or (equal major-mode 'vterm-mode)
-                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                  (display-buffer-reuse-window display-buffer-at-bottom)
-                  ;;(display-buffer-reuse-window display-buffer-in-direction)
-                  ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                  ;;(direction . bottom)
-                  ;;(dedicated . t) ;dedicated is supported in emacs27
-                  (reusable-frames . visible)
-                  (window-height . 0.4))))
+# #+begin_src emacs-lisp
+# (use-package vterm-toggle
+#   :ensure t
+#   :after vterm
+#   :config
+#   ;; When running programs in Vterm and in 'normal' mode, make sure that ESC
+#   ;; kills the program as it would in most standard terminal programs.
+#   (evil-define-key 'normal vterm-mode-map (kbd "<escape>") 'vterm--self-insert)
+#   (setq vterm-toggle-fullscreen-p nil)
+#   (setq vterm-toggle-scope 'project)
+#   (add-to-list 'display-buffer-alist
+#                '((lambda (buffer-or-name _)
+#                      (let ((buffer (get-buffer buffer-or-name)))
+#                        (with-current-buffer buffer
+#                          (or (equal major-mode 'vterm-mode)
+#                              (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+#                   (display-buffer-reuse-window display-buffer-at-bottom)
+#                   ;;(display-buffer-reuse-window display-buffer-in-direction)
+#                   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+#                   ;;(direction . bottom)
+#                   ;;(dedicated . t) ;dedicated is supported in emacs27
+#                   (reusable-frames . visible)
+#                   (window-height . 0.4))))
 
-#+end_src
+# #+end_src
 
 * SUDO EDIT
 [[https://github.com/nflath/sudo-edit][sudo-edit]] gives us the ability to open files with sudo privileges or switch over to editing with sudo privileges if we initially opened the file without such privileges.

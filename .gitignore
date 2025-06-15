@@ -26,6 +26,15 @@
 .config/emacs/eln-cache/
 .config/emacs/elpaca/
 
+# Emacs recent files
+.config/emacs/recentf
+
+# Emacs sessions
+.config/emacs/sessions
+
+# Emacs tramp
+.config/emacs/tramp
+
 # Projectile bookmarks
 .config/emacs/projectile-bookmarks.eld
 
