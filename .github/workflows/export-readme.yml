@@ -155,7 +155,7 @@ jobs:
               It updated \`README.md\` based on changes in \`README.org\`.
 
               **Branch:** \`${{ github.ref_name }}\`
-              **Commit:** \`${{ github.sha }}\`"
-              echo "Successfully created new PR for branch $BRANCH" || \ 
+              **Commit:** \`${{ github.sha }}\`" && \
+              echo "Successfully created new PR for branch $BRANCH" || \
               echo "Failed to create PR for branch $BRANCH"
           fi
