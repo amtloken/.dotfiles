@@ -37,5 +37,3 @@
 # Git
 git/allowed_signers
 
-# README.md is auto-generated using GitHub Actions
-README.md
