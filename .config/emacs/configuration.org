@@ -47,6 +47,7 @@
 - [[#global-settings][GLOBAL SETTINGS]]
   - [[#visit-emacs-configuration-document][Visit Emacs configuration document]]
 - [[#highlight-current-line][HIGHLIGHT CURRENT LINE]]
+- [[#highlight-todo][HIGHLIGHT TODO]]
 - [[#ivy-counsel][IVY (COUNSEL)]]
 - [[#modeline][MODELINE]]
 - [[#neotree][NEOTREE]]
@@ -719,6 +720,26 @@ Shortkey =C-c e= to open the Emacs configuration:
 (when window-system 
   (add-hook 'prog-mode-hook 'hl-line-mode))
 #+end_src
+
+* HIGHLIGHT TODO
+Adding highlights to TODO and related words.
+
+#+begin_src emacs-lisp
+(use-package hl-todo
+  :hook ((org-mode . hl-todo-mode)
+         (prog-mode . hl-todo-mode))
+  :config
+  (setq hl-todo-highlight-punctuation ":"
+        hl-todo-keyword-faces
+        `(("TODO"       warning bold)
+          ("FIXME"      error bold)
+          ("HACK"       font-lock-constant-face bold)
+          ("REVIEW"     font-lock-keyword-face bold)
+          ("NOTE"       success bold)
+          ("DEPRECATED" font-lock-doc-face bold))))
+
+#+end_src
+
 
 * IVY (COUNSEL)
 + Ivy, a generic completion mechanism for Emacs
