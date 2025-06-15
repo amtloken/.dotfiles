@@ -23,6 +23,7 @@
 - [[#important-programs-to-load-first][IMPORTANT PROGRAMS TO LOAD FIRST]]
   - [[#adding-the-scripts-directory-to-path][Adding the scripts directory to path]]
   - [[#sourcing-the-scripts][Sourcing the scripts]]
+- [[#file-encoding][FILE ENCODING]]
 - [[#fonts][FONTS]]
   - [[#temporary-font-adjustments][Temporary font adjustments]]
   - [[#nerd-fonts-for-modeline][Nerd fonts for Modeline]]
@@ -35,6 +36,7 @@
 - [[#flycheck][FLYCHECK]]
 - [[#git-programs][GIT PROGRAMS]]
   - [[#git-time-machine][Git Time Machine]]
+- [[#highlight-current-line][HIGHLIGHT CURRENT LINE]]
 - [[#ivy-counsel][IVY (COUNSEL)]]
 - [[#modeline][MODELINE]]
 - [[#neotree][NEOTREE]]
@@ -68,6 +70,16 @@
   (require 'elpaca-setup)  ;; The Elpaca Package Manager
   (require 'buffer-move)   ;; Buffer-move for better window management 
   (require 'eshell-prompt) ;; A fancy prompt for eshell
+#+end_src
+
+* FILE ENCODING
+#+begin_src emacs-lisp
+  (setq locale-coding-system 'utf-8)
+  (set-language-environment "UTF-8")
+  (set-terminal-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-selection-coding-system 'utf-8)
 #+end_src
 
 * FONTS
@@ -247,6 +259,12 @@ Install =luacheck= from your Linux distro's repositories for flycheck to work co
       (evil-define-key 'normal git-timemachine-mode-map (kbd "C-j") 'git-timemachine-show-previous-revision)
       (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision)
   )
+#+end_src
+
+* HIGHLIGHT CURRENT LINE
+#+begin_src emacs-lisp
+(when window-system 
+  (add-hook 'prog-mode-hook 'hl-line-mode))
 #+end_src
 
 * IVY (COUNSEL)
