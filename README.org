@@ -33,7 +33,7 @@ tilgang til dem på nye maskiner, eller nye installasjoner. Eventuelt kan også
 andre potensielt hente inspirasjon fra dem til sin egen konfigurasjon.
 
 * Hvordan bruke disse?
-Nøkkelord: =GNU Stow=. Rett og slett ren magi.
+Nøkkelord: =GNU Stow=. Rett og slett ren magi. Faralaralei.
 
 * Lisensiering
 Filene i dette repoet er lisensiert under GPLv3, som er en svært liberal lisens.
