@@ -101,7 +101,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           commit-message: "Auto-export README.md from README.org for ${{ github.ref_name }}"
           committer: GitHub Actions Bot <117858954+amtloken@users.noreply.github.com>
           author: GitHub Actions Bot <117858954+amtloken@users.noreply.github.com>
