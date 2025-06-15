@@ -34,5 +34,5 @@ andre potensielt hente inspirasjon fra dem til sin egen konfigurasjon.
 * Lisensiering
 Filene i dette repoet er lisensiert under GPLv3, som er en svært liberal lisens.
 Denne muliggjør bruk, kopiering, endring, distribusjon, salg, mv. av
-programvaren. For ytterligere detaljer, se lisensfila eller
+programvaren. For ytterligere detaljer, se lisensfila, eller
 <https://www.gnu.org/licenses/>.
