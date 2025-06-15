@@ -7,6 +7,9 @@ on:
       - .ci/banner.md
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   export-readme:
     name: Org to GFM
@@ -15,23 +18,19 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v4
+      with:
+        # Fetch full history for proper Git operations
+        fetch-depth: 0
 
-    - name: Install Emacs and Pandoc
+    - name: Install Pandoc
       run: |
         sudo apt-get update
-        sudo apt-get install -y emacs-nox pandoc
+        sudo apt-get install -y pandoc
     
-    - name: Export README.org to GFM using Emacs and Pandoc
+    - name: Export README.org to GFM using Pandoc
       run: |
-        emacs --batch README.org \
-              --eval "(require 'package)" \
-              --eval "(add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\"))" \
-              --eval "(package-initialize)" \
-              --eval "(unless (package-installed-p 'ox-pandoc) (package-refresh-contents) (package-install 'ox-pandoc))" \
-              --eval "(require 'ox)" \
-              --eval "(require 'ox-pandoc)" \
-              --eval "(setq org-pandoc-options '((standalone . t) (toc . t) (toc-depth . 2) (shift-heading-level-by . 1) (preserve-tabs . t)))" \
-              --eval "(with-current-buffer (org-pandoc-export-to-buffer 'gfm nil nil t nil) (write-file \"README.gfm.md\"))"
+        pandoc <(awk '/^\*+ .*:toc:/{flag=1; level=gsub(/\*/, "&"); next} /^\*+/ && flag{new_level=gsub(/\*/, "&"); if(new_level<=level){flag=0}} !flag' README.org) \
+          -f org -t gfm --standalone --toc --toc-depth=2 -o README.gfm.md
 
     - name: Prepend header banner to README.md
       run: |
@@ -55,7 +54,11 @@ jobs:
     - name: Commit and push updated README.md
       run: |
         git add README.md
-        git diff --cached --quiet || git commit -m "Auto-export README.md from README.org"
-        git push
+        if ! git diff --cached --quiet; then
+          git commit -m "Auto-export README.md from README.org [skip ci]"
+          git push
+        else
+          echo "No changes to commit"
+        fi
       
 
