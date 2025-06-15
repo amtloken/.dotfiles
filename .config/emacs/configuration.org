@@ -41,17 +41,17 @@ a frame, to ensure this works as intended in daemon mode.
   (defun amtl-after-frame (frame)
     (if (display-graphic-p frame)
 	(progn
-	  (add-to-list 'default-frame-alist '(font . "Source Code Pro-11"))
+	  (add-to-list 'default-frame-alist '(font . "JetBrains Mono-11"))
 	  (set-face-attribute 'default nil
-			      :font "Source Code Pro"
+			      :font "JetBrains Mono"
 			      :height 110
 			      :weight 'medium)
 	  (set-face-attribute 'variable-pitch nil
-			      :font "Source Serif 4 Medium"
+			      :font "Ubuntu"
 			      :height 120
 			      :weight 'medium)
 	  (set-face-attribute 'fixed-pitch nil
-			      :font "Source Code Pro"
+			      :font "JetBrains Mono"
 			      :height 110
 			      :weight 'medium)
 	  (set-face-attribute 'font-lock-comment-face nil
