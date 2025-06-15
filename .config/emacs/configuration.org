@@ -244,6 +244,22 @@ This package implements hiding or abbreviation of the modeline displays (lighter
 
 #+end_src
 
+* MODELINE
+The modeline is the bottom status bar that appears in Emacs windows.  While you can create your own custom modeline, why go to the trouble when Doom Emacs already has a nice modeline package available.  For more information on what is available to configure in the Doom modeline, check out: [[https://github.com/seagle0128/doom-modeline][Doom Modeline]]
+
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1)
+    :config
+    (setq doom-modeline-height 35      ;; sets modeline height
+	  doom-modeline-bar-width 5    ;; sets right bar width
+	  doom-modeline-persp-name t   ;; adds perspective name to modeline
+	  doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
+
+#+end_src
+
+
 * RAINBOW MODE
 Display the actual color as a background for any hex color value (ex. #ffffff).  The code block below enables rainbow-mode in all programming modes (prog-mode) as well as org-mode, which is why rainbow works in this document.  
 
