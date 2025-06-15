@@ -185,6 +185,20 @@ This package implements hiding or abbreviation of the modeline displays (lighter
 
 #+end_src
 
+* GIT PROGRAMS
+
+** Git Time Machine
+[[https://github.com/emacsmirror/git-timemachine][git-timemachine]] is a program that allows you to move backwards and forwards through a file's commits.  'SPC g t' will open the time machine on a file if it is in a git repo.  Then, while in normal mode, you can use 'CTRL-j' and 'CTRL-k' to move backwards and forwards through the commits.
+
+#+begin_src emacs-lisp
+  (use-package git-timemachine
+    :after git-timemachine
+    :hook (evil-normalize-keymaps . git-timemachine-hook)
+    :config
+      (evil-define-key 'normal git-timemachine-mode-map (kbd "C-j") 'git-timemachine-show-previous-revision)
+      (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision)
+  )
+#+end_src
 
 * RAINBOW MODE
 Display the actual color as a background for any hex color value (ex. #ffffff).  The code block below enables rainbow-mode in all programming modes (prog-mode) as well as org-mode, which is why rainbow works in this document.  
