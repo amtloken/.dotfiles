@@ -31,6 +31,8 @@ er en gjemt fil eller ei gjemt mappe. Dette repoet inneholder mine personlige
 tilgang til dem på nye maskiner, eller nye installasjoner. Eventuelt kan også
 andre potensielt hente inspirasjon fra dem til sin egen konfigurasjon.
 
+* Hvordan bruke disse?
+
 * Lisensiering
 Filene i dette repoet er lisensiert under GPLv3, som er en svært liberal lisens.
 Denne muliggjør bruk, kopiering, endring, distribusjon, salg, mv. av
