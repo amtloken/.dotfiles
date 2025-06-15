@@ -1,4 +1,4 @@
-name: Export README.org to GFM
+name: Export README.org to Readme.md (GitHub Flavored)
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   export-readme:
-    name: Org to GFM
+    name: README.org to README.md (GitHub Flavored)
     runs-on: ubuntu-latest
 
     steps:
@@ -32,13 +32,26 @@ jobs:
         pandoc <(awk '/^\*+ .*:toc:/{flag=1; level=gsub(/\*/, "&"); next} /^\*+/ && flag{new_level=gsub(/\*/, "&"); if(new_level<=level){flag=0}} !flag' README.org) \
           -f org -t gfm --standalone --toc --toc-depth=2 -o README.gfm.md
 
-    - name: Prepend header banner to README.md
+    - name: Clean up and finalize README.md
       run: |
-        cat .ci/banner.md README.gfm.md > README.md
-    
-    - name: Clean up temporary file
-      run: rm README.gfm.md
+        awk '
+        BEGIN { in_yaml = 0; yaml_content = "" }
+        /^---$/ && NR == 1 { in_yaml = 1; next }
+        /^---$/ && in_yaml { 
+            print "<!--"
+            print yaml_content
+            print "-->"
+            in_yaml = 0
+            next 
+        }
+        in_yaml { yaml_content = yaml_content $0 "\n"; next }
+        !in_yaml { print }
+        ' README.gfm.md > README.cleaned.md
 
+        cat .ci/banner.md README.cleaned.md > README.md
+
+        rm README.gfm.md README.cleaned.md
+    
     - name: Import PGP key
       run: |
         echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
