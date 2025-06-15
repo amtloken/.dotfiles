@@ -20,6 +20,7 @@
 
 * Innholdsfortegnelse :toc:
 - [[#hva-er-dette][Hva er dette?]]
+- [[#hvordan-bruke-disse][Hvordan bruke disse?]]
 - [[#lisensiering][Lisensiering]]
 
 * Hva er dette?
