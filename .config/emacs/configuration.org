@@ -47,6 +47,7 @@
   - [[#preserve-indentation-on-org-babel-tangle][Preserve Indentation On Org-Babel-Tangle]]
   - [[#toc-org][Toc-Org]]
   - [[#ox-hugo][Ox-Hugo]]
+- [[#pretty-mode][PRETTY MODE]]
 - [[#projectile][PROJECTILE]]
 - [[#rainbow-delimiters][RAINBOW DELIMITERS]]
 - [[#rainbow-mode][RAINBOW MODE]]
@@ -413,6 +414,14 @@ Export org docs to Hugo-style markdown.  Hugo is a static website generator.
   :ensure t   ;Auto-install the package from Melpa
   :after ox)
 
+#+end_src
+
+* PRETTY MODE
+#+begin_src emacs-lisp
+(when window-system
+  (use-package pretty-mode
+    :config
+    (global-pretty-mode t)))
 #+end_src
 
 * PROJECTILE
