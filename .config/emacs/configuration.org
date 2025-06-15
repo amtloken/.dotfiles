@@ -64,6 +64,17 @@ a frame, to ensure this works as intended in daemon mode.
   (add-hook 'after-make-frame-functions 'amtl-after-frame)
 #+end_src
 
+** Temporary font adjustments
+This can be done using the bindings =CTRL= plus =+=/=-= for zooming in/out.
+It is also possible to use =CTRL= while scrolling the mouse wheel.
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-+") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+#+end_src
+
 * ALL THE ICONS
 This is an icon set that can be used with dashboard, dired, ibuffer, and other Emacs programs.
 
