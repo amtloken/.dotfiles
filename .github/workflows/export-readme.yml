@@ -28,7 +28,7 @@ jobs:
               --eval "(add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\"))" \
               --eval "(package-initialize)" \
               --eval "(unless (package-installed-p 'ox-pandoc) (package-refresh-contents) (package-install 'ox-pandoc))" \
-              --eval "(require 'ox)"
+              --eval "(require 'ox)" \
               --eval "(require 'ox-pandoc)" \
               --eval "(setq org-pandoc-options '((standalone . t) (toc . t) (toc-depth . 2) (shift-heading-level-by . 1) (preserve-tabs . t)))" \
               --eval "(setq org-pandoc-format \"gfm\")" \
