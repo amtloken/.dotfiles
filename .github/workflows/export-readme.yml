@@ -145,7 +145,7 @@ jobs:
 
             **Branch:** `${{ github.ref_name }}`
             **Commit:** `${{ github.sha }}`
-          base: ${{ github.ref_name }}
+          base: ${{ github.event_before }}
           delete-branch: true
 
 
