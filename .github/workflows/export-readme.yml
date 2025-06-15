@@ -139,11 +139,14 @@ jobs:
         run: |
           BRANCH="ci/export-${{ github.ref_name }}"
 
-          # Check if PR already exists
-          if gh pr view "$BRANCH" --json number --jq .number > /dev/null 2>&1; then
+          echo "Checking for existing PR on branch: $BRANCH"
+
+          if gh pr view "$BRANCH" --json number --jq length | grep -q "1"; then
             echo "PR already exists for branch "$BRANCH"
+            PR_NUMBER=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number')
+            echo "Existing PR number: $PR_NUMBER"
           else
-            # Create new PR
+            echo "Creating new PR for branch $BRANCH"
             gh pr create \
               --base "${{ github.ref_name }}" \
               --head "$BRANCH" \
@@ -153,5 +156,6 @@ jobs:
 
               **Branch:** \`${{ github.ref_name }}\`
               **Commit:** \`${{ github.sha }}\`"
-              echo "Created new PR for branch "$BRANCH"
+              echo "Successfully created new PR for branch $BRANCH" || \ 
+              echo "Failed to create PR for branch $BRANCH"
           fi
