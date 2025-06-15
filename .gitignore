@@ -26,6 +26,9 @@
 .config/emacs/eln-cache/
 .config/emacs/elpaca/
 
+# Projectile bookmarks
+.config/emacs/projectile-bookmarks.eld
+
 # Folder structure from running Emacs(client)
 .config/emacs/auto-save-list/
 .config/emacs/elpa/
