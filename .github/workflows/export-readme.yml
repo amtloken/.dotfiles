@@ -126,7 +126,7 @@ jobs:
         if: steps.check-changes.outputs.has_changes == 'true'
         run: |
           BRANCH="ci/export-${{ github.ref_name }}"
-          git checkout -B "$BRANCH"
+          git switch -c "$BRANCH"
           git add README.md
           git commit -S -m "Auto-export README.md from README.org for ${{ github.ref_name }}"
           git push -f origin "$BRANCH"
@@ -145,7 +145,7 @@ jobs:
 
             **Branch:** `${{ github.ref_name }}`
             **Commit:** `${{ github.sha }}`
-          base: ${{ github.event_before }}
+          base: ${{ github.ref_name }}
           delete-branch: true
 
 
