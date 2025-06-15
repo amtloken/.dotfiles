@@ -57,6 +57,7 @@
 - [[#sane-defaults][SANE DEFAULTS]]
 - [[#theme][THEME]]
 - [[#tldr][TLDR]]
+- [[#undo-tree][UNDO TREE]]
 - [[#which-key][WHICH-KEY]]
 
 * IMPORTANT PROGRAMS TO LOAD FIRST
@@ -557,6 +558,30 @@ The following settings are simple modes that are enabled (or disabled) so that E
 
 #+end_src
 
+* UNDO TREE
+
+#+begin_src emacs-lisp
+  (use-package undo-tree
+    :config
+    (setq undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory "undo-tree"))))
+    (global-undo-tree-mode)
+
+    (defun +undo-tree-suppress-undo-history-saved-message (undo-tree-save-history &rest args)
+      "Suppress the message saying that the undo history file was saved (because this happens every single time you save a file)."
+      (let ((inhibit-message t))
+	(apply undo-tree-save-history args)))
+
+    (defun +undo-tree-suppress-buffer-modified-message (undo-tree-load-history &rest args)
+      "Suppress the message saying that the undo history could not be loaded because the file changed outside of Emacs."
+      (let ((inhibit-message t))
+	(apply undo-tree-load-history args)))
+
+    (advice-add #'undo-tree-load-history :around
+		#'+undo-tree-suppress-undo-history-saved-message)
+
+    (advice-add #'undo-tree-load-history :around
+		#'+undo-tree-suppress-buffer-modified-message))
+#+end_src
 
 * WHICH-KEY
 #+begin_src emacs-lisp
