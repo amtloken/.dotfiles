@@ -15,9 +15,11 @@
 #  along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 # -*- coding: utf-8 -*-
-#+title: Konfigurasjonsdokument for GNU Emacs
+#+title: Configuration document for GNU Emacs
 #+author: Arne Magnus Tveita Løken
 #+options: toc:2
+
+
 * IMPORTANT PROGRAMS TO LOAD FIRST
 
 ** Adding the scripts directory to path
@@ -30,6 +32,36 @@
   (require 'elpaca-setup)  ;; The Elpaca Package Manager
   (require 'buffer-move)   ;; Buffer-move for better window management 
   (require 'eshell-prompt) ;; A fancy prompt for eshell
+#+end_src
+
+* FONTS
+Font adjustment is added to its own function which is then called after creating
+a frame, to ensure this works as intended in daemon mode.
+#+begin_src emacs-lisp
+  (defun amtl-after-frame (frame)
+    (if (display-graphic-p frame)
+	(progn
+	  (add-to-list 'default-frame-alist '(font . "Source Code Pro-11"))
+	  (set-face-attribute 'default nil
+			      :font "Source Code Pro"
+			      :height 110
+			      :weight 'medium)
+	  (set-face-attribute 'variable-pitch nil
+			      :font "Source Serif 4 Medium"
+			      :height 120
+			      :weight 'medium)
+	  (set-face-attribute 'fixed-pitch nil
+			      :font "Source Code Pro"
+			      :height 110
+			      :weight 'medium)
+	  (set-face-attribute 'font-lock-comment-face nil
+			      :slant 'italic)
+	  (set-face-attribute 'font-lock-keyword-face nil
+			      :slant 'italic)
+	  (setq-default line-spacing 0.12))))
+
+  (mapc 'amtl-after-frame (frame-list))
+  (add-hook 'after-make-frame-functions 'amtl-after-frame)
 #+end_src
 
 * ALL THE ICONS
