@@ -14,21 +14,17 @@ jobs:
     - name: Check out repo
       uses: actions/checkout@v4
 
-    - name: Install Emacs and Pandoc
+    - name: Install Emacs and Pandoc, export README.org to GFM using Emacs
       run: |
         sudo apt-get update
         sudo apt-get install -y emacs-nox pandoc
-        emacs --batch --eval "(require 'package)" \
+        emacs --batch README.org \
+                      --eval "(require 'package)" \
                       --eval "(add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\"))" \
                       --eval "(package-initialize)" \
-                      --eval "(package-refresh-contents)" \
-                      --eval "(package-install 'ox-pandoc)"
-
-    - name: Export README.org to GFM using Emacs
-      run: |
-        emacs --batch README.org \
-              --eval "(require 'ox-pandoc)" \
-              --funcall org-pandoc-export-to-gfm
+                      --eval "(unless (package-installed-p 'ox-pandoc) (package-refresh-contents) (package-install 'ox-pandoc))" \
+                                                                                                      --eval "(require 'ox-pandoc)" \
+                      --funcall org-pandoc-export-to-gfm
 
     - name: Prepend header banner to README.md
       run: |
