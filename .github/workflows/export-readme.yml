@@ -126,7 +126,7 @@ jobs:
         if: steps.check-changes.outputs.has_changes == 'true'
         run: |
           BRANCH="ci/export-${{ github.ref_name }}"
-          git switch -c "$BRANCH"
+          git checkout -B "$BRANCH"
           git add README.md
           git commit -S -m "Auto-export README.md from README.org for ${{ github.ref_name }}"
           git push -f origin "$BRANCH"
@@ -134,19 +134,24 @@ jobs:
 
       - name: Create or update PR
         if: steps.check-changes.outputs.has_changes == 'true'
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ci/export-${{ github.ref_name }}
-          title: "Auto-export README.md for ${{ github.ref_name }}"
-          body: |
-            This PR was automatically created by a CI workflow.
-            It updated `README.md` based on changes in `README.org`.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="ci/export-${{ github.ref_name }}"
 
-            **Branch:** `${{ github.ref_name }}`
-            **Commit:** `${{ github.sha }}`
-          base: ${{ github.ref_name }}
-          delete-branch: true
+          # Check if PR already exists
+          if gh pr view "$BRANCH" --json number --jq .number > /dev/null 2>&1; then
+            echo "PR already exists for branch "$BRANCH"
+          else
+            # Create new PR
+            gh pr create \
+              --base "${{ github.ref_name }}" \
+              --head "$BRANCH" \
+              --title "Auto-export README.md for ${{ github.ref_name }}" \
+              --body "This PR was automatically created by a CI workflow.
+              It updated \`README.md\` based on changes in \`README.org\`.
 
-
-
+              **Branch:** \`${{ github.ref_name }}\`
+              **Commit:** \`${{ github.sha }}\`"
+              echo "Created new PR for branch "$BRANCH"
+          fi
