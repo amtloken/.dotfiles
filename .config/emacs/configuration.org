@@ -49,6 +49,7 @@
 - [[#highlight-current-line][HIGHLIGHT CURRENT LINE]]
 - [[#highlight-todo][HIGHLIGHT TODO]]
 - [[#ivy-counsel][IVY (COUNSEL)]]
+- [[#minibuffer-escape][MINIBUFFER ESCAPE]]
 - [[#modeline][MODELINE]]
 - [[#neotree][NEOTREE]]
 - [[#org-mode][ORG MODE]]
@@ -784,6 +785,14 @@ Adding highlights to TODO and related words.
 				 'ivy-rich-switch-buffer-transformer))
 
 #+end_src
+
+* MINIBUFFER ESCAPE
+By default, Emacs requires you to hit ESC three times to escape quit the minibuffer.  
+
+#+begin_src emacs-lisp
+(global-set-key [escape] 'keyboard-escape-quit)
+#+end_src
+
 
 * MODELINE
 The modeline is the bottom status bar that appears in Emacs windows.  While you can create your own custom modeline, why go to the trouble when Doom Emacs already has a nice modeline package available.  For more information on what is available to configure in the Doom modeline, check out: [[https://github.com/seagle0128/doom-modeline][Doom Modeline]]
