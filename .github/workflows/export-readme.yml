@@ -1,4 +1,4 @@
-name: Export README.org to Readme.md (GitHub Flavored)
+name: Export README.org to README.md (GitHub Flavored)
 
 on:
   push:
@@ -16,62 +16,107 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v4
-      with:
-        # Fetch full history for proper Git operations
-        fetch-depth: 0
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history for proper Git operations
+          fetch-depth: 0
 
-    - name: Install Pandoc
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y pandoc
-    
-    - name: Export README.org to GFM using Pandoc
-      run: |
-        pandoc <(awk '/^\*+ .*:toc:/{flag=1; level=gsub(/\*/, "&"); next} /^\*+/ && flag{new_level=gsub(/\*/, "&"); if(new_level<=level){flag=0}} !flag' README.org) \
-          -f org -t gfm --standalone --toc --toc-depth=2 -o README.gfm.md
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
 
-    - name: Clean up and finalize README.md
-      run: |
-        awk '
-        BEGIN { in_yaml = 0; yaml_content = "" }
-        /^---$/ && NR == 1 { in_yaml = 1; next }
-        /^---$/ && in_yaml { 
-            print "<!--"
-            print yaml_content
-            print "-->"
-            in_yaml = 0
-            next 
-        }
-        in_yaml { yaml_content = yaml_content $0 "\n"; next }
-        !in_yaml { print }
-        ' README.gfm.md > README.cleaned.md
+      - name: Export README.org to GFM using Pandoc
+        run: |
+          # Extract the TOC heading title from the org file
+          TOC_TITLE=$(awk '/^\*+ .*:toc:/{gsub(/^\*+ */, ""); gsub(/ *:toc: *.*$/, ""); print; exit}' README.org)
 
-        cat .ci/banner.md README.cleaned.md > README.md
+            # Generate the markdown with pandoc (without TOC title first)
+            pandoc <(awk '
+            /^\*+ .*:toc:/{
+              flag=1
+              level=gsub(/\*/, "&")
+              next
+            } 
+            /^\*+/ && flag {
+              new_level=gsub(/\*/, "&")
+              if(new_level<=level) flag=0
+            } 
+            !flag
+            ' README.org) \
+            -f org -t gfm --standalone --toc --toc-depth=2 -o README.gfm.md
 
-        rm README.gfm.md README.cleaned.md
-    
-    - name: Import PGP key
-      run: |
-        echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+            # Insert the extracted heading above the TOC (only before the first TOC item)
+            sed -i "0,/^- \[.*\](#.*)/s//# $TOC_TITLE\n\n&/" README.gfm.md
 
-    - name: Configure Git + GPG sign
-      run: |
-        KEYID=$(gpg --list-secret-keys --with-colons | grep '^sec' | cut -d: -f5)
-        git config user.name "GitHub Actions Bot"
-        git config user.email "117858954+amtloken@users.noreply.github.com"
-        git config user.signingkey "$KEYID"
-        git config commit.gpgsign true
+      - name: Clean up and finalize README.md
+        run: |
+          # Extract title and author from YAML frontmatter
+          TITLE=$(awk '/^title:/ { gsub(/^title: */, ""); print; exit }' README.gfm.md)
+          AUTHOR=$(awk '/^author:/ { gsub(/^author: */, ""); print; exit }' README.gfm.md)
 
-    - name: Commit and push updated README.md
-      run: |
-        git add README.md
-        if ! git diff --cached --quiet; then
-          git commit -m "Auto-export README.md from README.org [skip ci]"
-          git push
-        else
-          echo "No changes to commit"
-        fi
-      
+            # Extract YAML frontmatter as comments
+            YAML_COMMENTS=$(awk '
+            BEGIN { in_yaml = 0 }
+            /^---$/ && !in_yaml { in_yaml = 1; print "<!--"; next }
+            /^---$/ && in_yaml { print "-->"; in_yaml = 0; next }
+            in_yaml { print }
+            ' README.gfm.md)
+
+            # Build the final README.md
+            {
+              # Static banner content
+              cat .ci/banner.md
+              echo
+
+              # YAML frontmatter as comments
+              echo "$YAML_COMMENTS"
+              echo
+
+              # Title as main heading
+              echo "# $TITLE"
+              echo
+
+              # Author info 
+              echo "> *$AUTHOR*"
+              echo
+              echo "---"
+              echo
+
+              # Content without YAML frontmatter (this will include the TOC with its heading)
+              awk '
+              BEGIN { in_yaml = 0; yaml_done = 0 }
+              /^---$/ && !in_yaml && !yaml_done { in_yaml = 1; next }
+              /^---$/ && in_yaml { in_yaml = 0; yaml_done = 1; next }
+              !in_yaml && yaml_done { print }
+              ' README.gfm.md
+
+              } > README.md
+
+              # Clean up
+              rm README.gfm.md
+
+      - name: Import PGP key
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+
+      - name: Configure Git + GPG sign
+        run: |
+          KEYID=$(gpg --list-secret-keys --with-colons | grep '^sec' | cut -d: -f5)
+          git config user.name "GitHub Actions Bot"
+          git config user.email "117858954+amtloken@users.noreply.github.com"
+          git config user.signingkey "$KEYID"
+          git config commit.gpgsign true
+
+      - name: Commit and push updated README.md
+        run: |
+          git add README.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Auto-export README.md from README.org [skip ci]"
+            git push
+          else
+            echo "No changes to commit"
+          fi
+
 
