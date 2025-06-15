@@ -1,5 +1,5 @@
 #  README file for my dotfiles repo.
-#  Copyright (C) 2025 Arne Magnus Tveita Løken
+#  Copyright (C) 2025 Arne Magnus Tveita Løken.
 # 
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Pulic License as published by
