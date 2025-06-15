@@ -1,5 +1,5 @@
-#  README file for my config file repo.
-#  Copyright (C) 2025 Arne Magnus Tveita Løken
+#  README file for my personal =dotfiles= repo.
+#  Copyright (C) 2025 Arne Magnus Tveita Løken.
 # 
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Pulic License as published by
@@ -14,19 +14,29 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#+title: Arnes Dotfiles
+#+title: Arnes =dotfiles=-konfigurasjon
 #+author: Arne Magnus Tveita Løken
 #+options: toc:2
 
 * Innholdsfortegnelse :toc:
 - [[#hva-er-dette][Hva er dette?]]
+- [[#hvordan-bruke-disse][Hvordan bruke disse?]]
 - [[#lisensiering][Lisensiering]]
 
 * Hva er dette?
-Dotfiler er konfigurasjonsfiler som brukes til å personliggjøre Linux- og Unixbaserte systemer. Navnet `dotfiler' kommer av at filnavnet begynner med et punktum -- en dot. Punktumet først i fil- eller katalognavnet indikerer at det er en gjemt fil eller ei gjemt mappe. Dette repoet inneholder mine personlige dotfiler. De lagres her av bekvemmelighetsårsaker slik at jeg enkelt kan få tilgang til dem på nye maskiner eller nye installasjoner. Eventuelt kan også andre potensielt hente inspirasjon fra dem til sin egen konfigurasjon.
+=dotfiles= er konfigurasjonsfiler som brukes til å personliggjøre Linux- og 
+Unixbaserte systemer. Navnet =dotfiles= kommer av at filnavnet begynner med et
+punktum -- en dot. Punktumet først i fil- eller katalognavnet indikerer at det
+er en gjemt fil eller ei gjemt mappe. Dette repoet inneholder mine personlige
+=dotfiles=. De lagres her av bekvemmelighetsårsaker, slik at jeg enkelt kan få
+tilgang til dem på nye maskiner, eller nye installasjoner. Eventuelt kan også
+andre potensielt hente inspirasjon fra dem til sin egen konfigurasjon.
+
+* Hvordan bruke disse?
+Nøkkelord: =GNU Stow=. Rett og slett ren magi. 
 
 * Lisensiering
 Filene i dette repoet er lisensiert under GPLv3, som er en svært liberal lisens.
 Denne muliggjør bruk, kopiering, endring, distribusjon, salg, mv. av
-programvaren. For ytterligere detaljer, se lisensfila eller
+programvaren. For ytterligere detaljer, se lisensfila, eller
 <https://www.gnu.org/licenses/>.

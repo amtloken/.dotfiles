@@ -18,8 +18,25 @@
 *~
 
 # Elisp and Emacs temp files
-.config/emacs/*.el*
+.config/emacs/configuration.el
+.config/emacs/\#*\#
 .config/emacs/*~
+
+# Elpaca archives
+.config/emacs/eln-cache/
+.config/emacs/elpaca/
+
+# Emacs recent files
+.config/emacs/recentf
+
+# Emacs sessions
+.config/emacs/sessions
+
+# Emacs tramp
+.config/emacs/tramp
+
+# Projectile bookmarks
+.config/emacs/projectile-bookmarks.eld
 
 # Folder structure from running Emacs(client)
 .config/emacs/auto-save-list/
@@ -31,3 +48,4 @@
 
 # Git
 git/allowed_signers
+

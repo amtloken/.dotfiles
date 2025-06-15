@@ -1,0 +1,121 @@
+name: export-readme-ci
+
+on:
+  push:
+    paths:
+      - README.org
+      - .ci/banner.md
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  export-readme:
+    name: README.org to README.md (GitHub Flavored)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history for proper Git operations
+          fetch-depth: 0
+
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+        with:
+          pandoc-version: 'latest'
+
+      - name: Export README.org to GFM using Pandoc
+        run: |
+          # Extract the TOC heading title from the org file
+          TOC_TITLE=$(awk '/^\*+ .*:toc:/{gsub(/^\*+ */, ""); gsub(/ *:toc: *.*$/, ""); print; exit}' README.org)
+
+            # Generate the markdown with pandoc (without TOC title first)
+            pandoc <(awk '
+            /^\*+ .*:toc:/{
+              flag=1
+              level=gsub(/\*/, "&")
+              next
+            } 
+            /^\*+/ && flag {
+              new_level=gsub(/\*/, "&")
+              if(new_level<=level) flag=0
+            } 
+            !flag
+            ' README.org) \
+            -f org -t gfm --standalone --toc --toc-depth=2 -o README.gfm.md
+
+            # Insert the extracted heading above the TOC (only before the first TOC item)
+            sed -i "0,/^- \[.*\](#.*)/s//# $TOC_TITLE\n\n&/" README.gfm.md
+
+      - name: Clean up and finalize README.md
+        run: |
+          # Extract title and author from YAML frontmatter
+          TITLE=$(awk '/^title:/ { gsub(/^title: */, ""); print; exit }' README.gfm.md)
+          AUTHOR=$(awk '/^author:/ { gsub(/^author: */, ""); print; exit }' README.gfm.md)
+
+            # Extract YAML frontmatter as comments
+            YAML_COMMENTS=$(awk '
+            BEGIN { in_yaml = 0 }
+            /^---$/ && !in_yaml { in_yaml = 1; print "<!--"; next }
+            /^---$/ && in_yaml { print "-->"; in_yaml = 0; next }
+            in_yaml { print }
+            ' README.gfm.md)
+
+            # Build the final README.md
+            {
+              # Static banner content
+              cat .ci/banner.md
+              echo
+
+              # YAML frontmatter as comments
+              echo "$YAML_COMMENTS"
+              echo
+
+              # Title as main heading
+              echo "# $TITLE"
+              echo
+
+              # Author info 
+              echo "> *$AUTHOR*"
+              echo
+              echo "---"
+              echo
+
+              # Content without YAML frontmatter (this will include the TOC with its heading)
+              awk '
+              BEGIN { in_yaml = 0; yaml_done = 0 }
+              /^---$/ && !in_yaml && !yaml_done { in_yaml = 1; next }
+              /^---$/ && in_yaml { in_yaml = 0; yaml_done = 1; next }
+              !in_yaml && yaml_done { print }
+              ' README.gfm.md
+
+              } > README.md
+
+              # Clean up
+              rm README.gfm.md
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GH_PAT }}
+          commit-message: "Auto-export README.md from README.org for ${{ github.ref_name }}"
+          committer: GitHub Actions Bot <117858954+amtloken@users.noreply.github.com>
+          author: GitHub Actions Bot <117858954+amtloken@users.noreply.github.com>
+          signoff: false
+          branch: ci/export-${{ github.ref_name }}
+          delete-branch: true
+          title: "Auto-export README.md for ${{ github.ref_name }}"
+          body: |
+            This PR was automatically created by a CI workflow.
+            It updated `README.md` based on changes in `README.org`.
+
+            **Branch:** `${{ github.ref_name }}`
+            **Commit:** `${{ github.sha }}`
+          labels: |
+            automated
+            documentation
+          draft: false
