@@ -18,7 +18,7 @@
 #+author: Arne Magnus Tveita Løken
 #+options: toc:2
 
-* Innholdsfortegnelse :toc:
+* Table of Contents :toc:
 - [[#what-are-these][What are these?]]
 - [[#how-to-use-these][How to use these?]]
 - [[#licensing][Licensing]]
@@ -34,7 +34,6 @@ own configurations.
 
 * How to use these?
 Key word: =GNU Stow=. It's like magic.
-Nøkkelord: =GNU Stow=. Rett og slett ren magi. 
 
 * Licensing
 The files in this repo are licenses under GPLv3, which is a very liberal license.
