@@ -55,7 +55,7 @@ jobs:
 
     - name: Commit and push updated README.md
       run: |
-        git add README.md
+        git add -f README.md
         git diff --cached --quiet || git commit -m "Auto-export README.md from README.org"
         git push
       
