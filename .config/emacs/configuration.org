@@ -75,6 +75,12 @@ It is also possible to use =CTRL= while scrolling the mouse wheel.
   (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 #+end_src
 
+** Nerd fonts for Modeline
+
+#+begin_src emacs-lisp
+  (use-package nerd-icons)
+#+end_src
+
 * ALL THE ICONS
 This is an icon set that can be used with dashboard, dired, ibuffer, and other Emacs programs.
 
