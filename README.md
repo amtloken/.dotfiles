@@ -14,10 +14,10 @@ Licensed under [GPLv3](./LICENSE).
 
 <!--
 author: Arne Magnus Tveita Løken
-title: Arnes `dotfiles`-konfigurasjon
+title: Arne's `dotfiles`
 -->
 
-# Arnes `dotfiles`-konfigurasjon
+# Arne's `dotfiles`
 
 > *Arne Magnus Tveita Løken*
 
@@ -26,28 +26,28 @@ title: Arnes `dotfiles`-konfigurasjon
 
 # Innholdsfortegnelse
 
-- [Hva er dette?](#hva-er-dette)
-- [Hvordan bruke disse?](#hvordan-bruke-disse)
-- [Lisensiering](#lisensiering)
+- [What are these?](#what-are-these)
+- [How to use these?](#how-to-use-these)
+- [Licensing](#licensing)
 
-# Hva er dette?
+# What are these?
 
-`dotfiles` er konfigurasjonsfiler som brukes til å personliggjøre Linux-
-og Unixbaserte systemer. Navnet `dotfiles` kommer av at filnavnet
-begynner med et punktum – en dot. Punktumet først i fil- eller
-katalognavnet indikerer at det er en gjemt fil eller ei gjemt mappe.
-Dette repoet inneholder mine personlige `dotfiles`. De lagres her av
-bekvemmelighetsårsaker, slik at jeg enkelt kan få tilgang til dem på nye
-maskiner, eller nye installasjoner. Eventuelt kan også andre potensielt
-hente inspirasjon fra dem til sin egen konfigurasjon.
+`dotfiles` are configuration files used to personalize Linux- and Unix
+based systems. The name `dotfiles` stems from the file names starting
+with a dot. A leading dot in a file or folder name indicates that the
+file or folder is hidden. This repo contains my personal `dotfiles`.
+They are stored here for convenience, so that I can simply access them
+on new machines, or fresh installs. Eventually, others may potentially
+find them inspirational for their own configurations.
 
-# Hvordan bruke disse?
+# How to use these?
 
-Nøkkelord: `GNU Stow`. Rett og slett ren magi.
+Key word: `GNU Stow`. It's like magic. Nøkkelord: `GNU Stow`. Rett og
+slett ren magi.
 
-# Lisensiering
+# Licensing
 
-Filene i dette repoet er lisensiert under GPLv3, som er en svært liberal
-lisens. Denne muliggjør bruk, kopiering, endring, distribusjon, salg,
-mv. av programvaren. For ytterligere detaljer, se lisensfila, eller
+The files in this repo are licenses under GPLv3, which is a very liberal
+license. It facilitates use, copying, changing, distribution, sale, and
+more, of the software. For further details, see the LICENSE file, or
 <https://www.gnu.org/licenses/>.
