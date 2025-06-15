@@ -31,7 +31,7 @@ jobs:
               --eval "(require 'ox-pandoc)" \
               --eval "(setq org-pandoc-options '((standalone . t)))" \
               --eval "(setq org-pandoc-output-file \"README.gfm.md\")" \
-              --eval "(org-pandoc-export-to-gfm t")
+              --eval "(org-pandoc-export-to-gfm t)"
 
     - name: Prepend header banner to README.md
       run: |
