@@ -24,7 +24,7 @@ title: Arne's `dotfiles`
 ---
 
 
-# Innholdsfortegnelse
+# Table of Contents
 
 - [What are these?](#what-are-these)
 - [How to use these?](#how-to-use-these)
@@ -42,8 +42,7 @@ find them inspirational for their own configurations.
 
 # How to use these?
 
-Key word: `GNU Stow`. It's like magic. Nøkkelord: `GNU Stow`. Rett og
-slett ren magi.
+Key word: `GNU Stow`. It's like magic.
 
 # Licensing
 
