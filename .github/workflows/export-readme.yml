@@ -31,7 +31,7 @@ jobs:
               --eval "(require 'ox)" \
               --eval "(require 'ox-pandoc)" \
               --eval "(setq org-pandoc-options '((standalone . t) (toc . t) (toc-depth . 2) (shift-heading-level-by . 1) (preserve-tabs . t)))" \
-              --eval "(org-pandoc-export-to-file 'gfm \"README.gfm.md\")"
+              --eval "(org-pandoc-export-to-pandoc \"README.org\" \"README.gfm.md\" 'gfm)"
 
     - name: Prepend header banner to README.md
       run: |
@@ -54,7 +54,7 @@ jobs:
 
     - name: Commit and push updated README.md
       run: |
-        git add -f README.md
+        git add README.md
         git diff --cached --quiet || git commit -m "Auto-export README.md from README.org"
         git push
       
