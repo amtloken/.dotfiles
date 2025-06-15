@@ -287,6 +287,86 @@ Neotree is a file tree viewer.  When you open neotree, it jumps to the current f
 
 #+end_src
 
+* ORG MODE
+** Agenda
+#+begin_src emacs-lisp
+(setq org-agenda-files '("~/.config/emacs/agenda.org"))
+#+end_src
+
+** Bullets
+=Org-bullets= gives us attractive bullets rather than asterisks.
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook 'org-indent-mode)
+(use-package org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+end_src
+
+** Diminish Org Indent Mode
+Removes "Ind" from showing in the modeline.
+
+#+begin_src emacs-lisp
+(eval-after-load 'org-indent '(diminish 'org-indent-mode))
+#+end_src
+
+** Org Level Headers
+#+begin_src emacs-lisp
+  (custom-set-faces
+   '(org-level-1 ((t (:inherit outline-1 :height 1.7))))
+   '(org-level-2 ((t (:inherit outline-2 :height 1.6))))
+   '(org-level-3 ((t (:inherit outline-3 :height 1.5))))
+   '(org-level-4 ((t (:inherit outline-4 :height 1.4))))
+   '(org-level-5 ((t (:inherit outline-5 :height 1.3))))
+   '(org-level-6 ((t (:inherit outline-5 :height 1.2))))
+   '(org-level-7 ((t (:inherit outline-5 :height 1.1)))))
+#+end_src
+
+** Org-Tempo
+Org-tempo is not a separate package but a module within org that can be enabled.  Org-tempo allows for '<s' followed by TAB to expand to a begin_src tag.  Other expansions available include:
+
+| Typing the below + TAB | Expands to ...                          |
+|------------------------+-----------------------------------------|
+| <a                     | '#+BEGIN_EXPORT ascii' … '#+END_EXPORT  |
+| <c                     | '#+BEGIN_CENTER' … '#+END_CENTER'       |
+| <C                     | '#+BEGIN_COMMENT' … '#+END_COMMENT'     |
+| <e                     | '#+BEGIN_EXAMPLE' … '#+END_EXAMPLE'     |
+| <E                     | '#+BEGIN_EXPORT' … '#+END_EXPORT'       |
+| <h                     | '#+BEGIN_EXPORT html' … '#+END_EXPORT'  |
+| <l                     | '#+BEGIN_EXPORT latex' … '#+END_EXPORT' |
+| <q                     | '#+BEGIN_QUOTE' … '#+END_QUOTE'         |
+| <s                     | '#+BEGIN_SRC' … '#+END_SRC'             |
+| <v                     | '#+BEGIN_VERSE' … '#+END_VERSE'         |
+
+#+begin_src emacs-lisp 
+(require 'org-tempo)
+#+end_src
+
+** Preserve Indentation On Org-Babel-Tangle
+#+begin_src emacs-lisp
+(setq org-src-preserve-indentation t)
+
+#+end_src
+
+** Toc-Org
+Allows us to create a Table of Contents in our Org docs.
+
+#+begin_src emacs-lisp
+(use-package toc-org
+    :commands toc-org-enable
+    :init (add-hook 'org-mode-hook 'toc-org-enable))
+
+#+end_src
+
+** Ox-Hugo
+Export org docs to Hugo-style markdown.  Hugo is a static website generator.
+
+#+begin_src emacs-lisp
+(use-package ox-hugo
+  :ensure t   ;Auto-install the package from Melpa
+  :after ox)
+
+#+end_src
+
 
 * RAINBOW MODE
 Display the actual color as a background for any hex color value (ex. #ffffff).  The code block below enables rainbow-mode in all programming modes (prog-mode) as well as org-mode, which is why rainbow works in this document.  
