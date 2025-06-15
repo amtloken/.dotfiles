@@ -98,18 +98,6 @@ jobs:
               # Clean up
               rm README.gfm.md
 
-      - name: Import PGP key
-        run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
-
-      - name: Configure Git + GPG sign
-        run: |
-          KEYID=$(gpg --list-secret-keys --with-colons | grep '^sec' | cut -d: -f5)
-          git config user.name "GitHub Actions Bot"
-          git config user.email "117858954+amtloken@users.noreply.github.com"
-          git config user.signingkey "$KEYID"
-          git config commit.gpgsign true
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
