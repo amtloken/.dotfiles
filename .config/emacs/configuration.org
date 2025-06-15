@@ -19,6 +19,39 @@
 #+author: Arne Magnus Tveita Løken
 #+options: toc:2
 
+* TABLE OF CONTENTS :toc:
+- [[#important-programs-to-load-first][IMPORTANT PROGRAMS TO LOAD FIRST]]
+  - [[#adding-the-scripts-directory-to-path][Adding the scripts directory to path]]
+  - [[#sourcing-the-scripts][Sourcing the scripts]]
+- [[#fonts][FONTS]]
+  - [[#temporary-font-adjustments][Temporary font adjustments]]
+  - [[#nerd-fonts-for-modeline][Nerd fonts for Modeline]]
+- [[#all-the-icons][ALL THE ICONS]]
+- [[#backup][BACKUP]]
+- [[#company][COMPANY]]
+- [[#diminish][DIMINISH]]
+- [[#dired][DIRED]]
+- [[#evil][EVIL]]
+- [[#git-programs][GIT PROGRAMS]]
+  - [[#git-time-machine][Git Time Machine]]
+- [[#ivy-counsel][IVY (COUNSEL)]]
+- [[#modeline][MODELINE]]
+- [[#neotree][NEOTREE]]
+- [[#org-mode][ORG MODE]]
+  - [[#agenda][Agenda]]
+  - [[#bullets][Bullets]]
+  - [[#diminish-org-indent-mode][Diminish Org Indent Mode]]
+  - [[#org-level-headers][Org Level Headers]]
+  - [[#org-tempo][Org-Tempo]]
+  - [[#preserve-indentation-on-org-babel-tangle][Preserve Indentation On Org-Babel-Tangle]]
+  - [[#toc-org][Toc-Org]]
+  - [[#ox-hugo][Ox-Hugo]]
+- [[#projectile][PROJECTILE]]
+- [[#rainbow-delimiters][RAINBOW DELIMITERS]]
+- [[#rainbow-mode][RAINBOW MODE]]
+- [[#theme][THEME]]
+- [[#tldr][TLDR]]
+- [[#which-key][WHICH-KEY]]
 
 * IMPORTANT PROGRAMS TO LOAD FIRST
 
