@@ -6,52 +6,50 @@ on:
       - README.org
   workflow_dispatch:
 
-  jobs:
-    export-readme:
-      name: Org to GFM
-      runs-on: ubuntu-latest
-      steps:
-      - name: Check out repo
-        uses: actions/checkout@v4
+jobs:
+  export-readme:
+    name: Org to GFM
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v4
 
-      - name: Install Emacs and Pandoc
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y emacs-nox pandoc
-          emacs --batch --eval "(require 'package)" \
-                        --eval "(add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\"))" \
-                        --eval "(package-initialize)" \
-                        --eval "(package-refresh-contents)" \
-                        --eval "(package-install 'ox-pandoc)"
+    - name: Install Emacs and Pandoc
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y emacs-nox pandoc
+        emacs --batch --eval "(require 'package)" \
+                      --eval "(add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\"))" \
+                      --eval "(package-initialize)" \
+                      --eval "(package-refresh-contents)" \
+                      --eval "(package-install 'ox-pandoc)"
 
-      - name: Export README.org to GFM using Emacs
-        run: |
-          emacs --batch README.org \
-                --eval "(require 'ox-pandoc)" \
-                --funcall org-pandoc-export-to-gfm
+    - name: Export README.org to GFM using Emacs
+      run: |
+        emacs --batch README.org \
+              --eval "(require 'ox-pandoc)" \
+              --funcall org-pandoc-export-to-gfm
 
-      - name: Prepend header banner to README.md
-        run: |
-          (cat .ci/banner.md; cat README.md) | tee README.md > /dev/null
+    - name: Prepend header banner to README.md
+      run: |
+        (cat .ci/banner.md; cat README.md) | tee README.md > /dev/null
       
-      - name: Import PGG key
-        run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+    - name: Import PGG key
+      run: |
+        echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
 
-      - name: Configure Git + GPG sign
-        run: |
-          KEYID=$(gpg --list-secret-keys --with-colons | grep '^sec' | cut -d: -f5)
-          git config user.name "GitHub Actions Bot"
-          git config user.email "117858954+amtloken@users.noreply.github.com"
-          git config user.signingkey "$KEYID"
-          git config commit.gpgsign true
+    - name: Configure Git + GPG sign
+      run: |
+        KEYID=$(gpg --list-secret-keys --with-colons | grep '^sec' | cut -d: -f5)
+        git config user.name "GitHub Actions Bot"
+        git config user.email "117858954+amtloken@users.noreply.github.com"
+        git config user.signingkey "$KEYID"
+        git config commit.gpgsign true
 
-      - name: Commit and push updated README.md
-        run: |
-          git add README.md
-          git diff --cached --quiet || git commit -m "Auto-export README.md from README.org"
-          git push
+    - name: Commit and push updated README.md
+      run: |
+        git add README.md
+        git diff --cached --quiet || git commit -m "Auto-export README.md from README.org"
+        git push
       
-      - name: Convert README.org to GFM with banner
-        run: |
 
