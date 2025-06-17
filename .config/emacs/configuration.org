@@ -64,6 +64,7 @@
 - [[#programming][PROGRAMMING]]
   - [[#javascript-typescript-json][JavaScript, TypeScript, JSON]]
   - [[#emacs-lisp][Emacs Lisp]]
+  - [[#yaml][YAML]]
 - [[#projectile][PROJECTILE]]
 - [[#rainbow-delimiters][RAINBOW DELIMITERS]]
 - [[#rainbow-mode][RAINBOW MODE]]
@@ -73,6 +74,7 @@
 - [[#sudo-edit][SUDO EDIT]]
 - [[#theme][THEME]]
 - [[#tldr][TLDR]]
+- [[#transient][TRANSIENT]]
 - [[#transparency][TRANSPARENCY]]
 - [[#undo-tree][UNDO TREE]]
 - [[#which-key][WHICH-KEY]]
@@ -957,6 +959,10 @@ Use =eldoc-mode= to show documentation.
   :hook
   (emacs-lisp-mode . eldoc-mode))
 #+end_src
+** YAML
+#+begin_src emacs-lisp
+(use-package yaml-mode)
+#+end_src
 * PROJECTILE
 [[https://github.com/bbatsov/projectile][Projectile]] is a project interaction library for Emacs.
 
@@ -1131,6 +1137,11 @@ Eshell is an Emacs 'shell' that is written in Elisp.
 #+begin_src emacs-lisp
 (use-package tldr)
 
+#+end_src
+
+* TRANSIENT
+#+begin_src emacs-lisp
+(use-package transient)
 #+end_src
 
 * TRANSPARENCY
