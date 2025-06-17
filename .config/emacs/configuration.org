@@ -43,8 +43,6 @@
 - [[#general-keybindings][GENERAL KEYBINDINGS]]
 - [[#git-programs][GIT PROGRAMS]]
   - [[#git-time-machine][Git Time Machine]]
-- [[#global-settings][GLOBAL SETTINGS]]
-  - [[#visit-emacs-configuration-document][Visit Emacs configuration document]]
 - [[#highlight-current-line][HIGHLIGHT CURRENT LINE]]
 - [[#highlight-todo][HIGHLIGHT TODO]]
 - [[#ivy-counsel][IVY (COUNSEL)]]
@@ -502,8 +500,8 @@ Install =luacheck= from your Linux distro's repositories for flycheck to work co
   (amtl/leader-keys
     "f" '(:ignore t :wk "Files")    
     "f c" '((lambda () (interactive)
-              (find-file "~/.config/emacs/config.org")) 
-            :wk "Open emacs config.org")
+              (find-file "~/.config/emacs/configuration.org")) 
+            :wk "Open emacs configuration.org")
     "f e" '((lambda () (interactive)
               (dired "~/.config/emacs/")) 
             :wk "Open user-emacs-directory in dired")
@@ -675,16 +673,6 @@ Install =luacheck= from your Linux distro's repositories for flycheck to work co
 
 
 
-* GLOBAL SETTINGS
-** Visit Emacs configuration document
-Shortkey =C-c e= to open the Emacs configuration:
-#+begin_src emacs-lisp
-(defun +visit-emacs-config ()
-  (interactive)
-  (find-file (concat user-emacs-directory "configuration.org")))
-
-(global-set-key (kbd "C-c e") '+visit-emacs-config)
-#+end_src
 
 * HIGHLIGHT CURRENT LINE
 #+begin_src emacs-lisp
