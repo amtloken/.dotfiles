@@ -46,6 +46,7 @@
 - [[#highlight-current-line][HIGHLIGHT CURRENT LINE]]
 - [[#highlight-todo][HIGHLIGHT TODO]]
 - [[#ivy-counsel][IVY (COUNSEL)]]
+- [[#markdown][Markdown]]
 - [[#minibuffer-escape][MINIBUFFER ESCAPE]]
 - [[#modeline][MODELINE]]
 - [[#neotree][NEOTREE]]
@@ -409,7 +410,7 @@ An RSS newsfeed reader for Emacs.  Move through the articles with 'j/k'.  Move t
     (define-key evil-motion-state-map (kbd "RET") nil)
     (define-key evil-motion-state-map (kbd "TAB") nil))
   ;; Setting RETURN key in org-mode to follow links
-    (setq org-return-follows-link  t)
+  (setq org-return-follows-link  t)
 
 #+end_src
 
@@ -746,6 +747,41 @@ Adding highlights to TODO and related words.
 
 #+end_src
 
+* Markdown
+#+begin_src emacs-lisp
+(defun amtl-markdown-outline-setup ()
+  "Org-ish folding for Markdown headers."
+  (outline-minor-mode 1)
+  ;; Make outline treat markdown headers as headings
+  (setq-local outline-regexp "^\\(#+\\)\\s-+")
+  ;; Level = number of #'s
+  (setq-local outline-level
+			  (lambda ()
+				(length (match-string 1)))))
+
+(add-hook 'markdown-mode-hook #'amtl-markdown-outline-setup)
+#+end_src
+
+#+begin_src emacs-lisp
+(defun amtl-markdown-mark-subtree ()
+  "Mark Markdown section (current heading ant its contents)."
+  (interactive)
+  (when (re-search-backward "^#+\\s-+" nil t)
+	(set-mark (point))
+	(forward-line 1)
+	(if (re-search-forward "^#+\\s-+" nil t)
+		(beginning-of-line)
+	  (goto-char (point-max)))))
+
+(with-eval-after-load 'markdown-mode
+  (define-key markdown-mode-map (kbd "C-c C-M-h") #'amtl-markdown-mark-subtree))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package markdown-toc
+  :after markdown-mode)
+#+end_src
+
 * MINIBUFFER ESCAPE
 By default, Emacs requires you to hit ESC three times to escape quit the minibuffer.  
 
@@ -1064,7 +1100,7 @@ Eshell is an Emacs 'shell' that is written in Elisp.
         eshell-hist-ignoredups t
         eshell-scroll-to-bottom-on-input t
         eshell-destroy-buffer-when-process-dies t
-        eshell-visual-commands'("bash" "fish" "htop" "ssh" "top" "zsh"))
+        eshell-visual-commands '("bash" "fish" "htop" "ssh" "top" "zsh"))
 #+end_src
 
 # ** Vterm
