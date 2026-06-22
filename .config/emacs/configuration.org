@@ -66,6 +66,7 @@
   - [[#javascript-typescript-json][JavaScript, TypeScript, JSON]]
   - [[#emacs-lisp][Emacs Lisp]]
   - [[#yaml][YAML]]
+  - [[#lsp][LSP]]
 - [[#projectile][PROJECTILE]]
 - [[#rainbow-delimiters][RAINBOW DELIMITERS]]
 - [[#rainbow-mode][RAINBOW MODE]]
@@ -997,11 +998,25 @@ Use =eldoc-mode= to show documentation.
 #+end_src
 ** YAML
 #+begin_src emacs-lisp
-(use-package yaml-mode)
+(use-package yaml-mode
+  :mode "\\.ya?ml\\'")
+#+end_src
+** LSP
+#+begin_src emacs-lisp
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook
+  ((yaml-mode . lsp-deferred))
+  :custom
+  (lsp-keymap-prefix "C-c l")
+  (lsp-enable-snippet nil))
+
+(use-package lsp-ui
+  :after lsp-mode
+  :commands lsp-ui-mode)
 #+end_src
 * PROJECTILE
 [[https://github.com/bbatsov/projectile][Projectile]] is a project interaction library for Emacs.
-
 #+begin_src emacs-lisp
 (use-package projectile
   :config
