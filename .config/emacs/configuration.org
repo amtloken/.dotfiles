@@ -78,6 +78,7 @@
 - [[#transparency][TRANSPARENCY]]
 - [[#undo-tree][UNDO TREE]]
 - [[#which-key][WHICH-KEY]]
+- [[#yasnippet][YASNIPPET]]
 
 * IMPORTANT PROGRAMS TO LOAD FIRST
 
@@ -159,7 +160,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer, and other E
     :if (display-graphic-p))
 
   (use-package all-the-icons-dired
-    :hook (dired-mode . (lambda () (all-the-icons-dired-mode t)=)))
+    :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 #+end_src
 
 * BACKUP
@@ -1200,3 +1201,10 @@ With Emacs version 29, true transparency has been added.  I have turned transpar
 	  which-key-separator " → " ))
 #+end_src
 
+* YASNIPPET
+
+#+begin_src emacs-lisp
+(use-package yasnippet
+:config
+(yas-global-mode 1))
+#+end_src
