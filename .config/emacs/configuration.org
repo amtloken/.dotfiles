@@ -2,7 +2,7 @@
 #  Copyright (C) 2025 Arne Magnus Tveita Løken
 # 
 #  This program is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Pulic License as published by
+#  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 # 
@@ -27,7 +27,7 @@
 - [[#fonts][FONTS]]
   - [[#temporary-font-adjustments][Temporary font adjustments]]
   - [[#nerd-fonts-for-modeline][Nerd fonts for Modeline]]
-- [[#all-the-icons][ALL THE ICONS]]
+- [[#nerd-icons][NERD ICONS]]
 - [[#backup][BACKUP]]
 - [[#company][COMPANY]]
 - [[#dashboard][DASHBOARD]]
@@ -37,7 +37,6 @@
 - [[#ediff][EDIFF]]
 - [[#elfeed][ELFEED]]
 - [[#ellama][ELLAMA]]
-- [[#eradio][ERADIO]]
 - [[#evil][EVIL]]
 - [[#flycheck][FLYCHECK]]
 - [[#general-keybindings][GENERAL KEYBINDINGS]]
@@ -72,13 +71,15 @@
 - [[#sane-defaults][SANE DEFAULTS]]
 - [[#shells-and-terminals][SHELLS AND TERMINALS]]
   - [[#eshell][Eshell]]
+  - [[#vterm][Vterm]]
+  - [[#vterm-toggle][Vterm-Toggle]]
 - [[#sudo-edit][SUDO EDIT]]
 - [[#theme][THEME]]
 - [[#tldr][TLDR]]
-- [[#transient][TRANSIENT]]
 - [[#transparency][TRANSPARENCY]]
-- [[#undo-tree][UNDO TREE]]
+- [[#undo][UNDO]]
 - [[#which-key][WHICH-KEY]]
+- [[#yasnippet][YASNIPPET]]
 
 * IMPORTANT PROGRAMS TO LOAD FIRST
 
@@ -151,16 +152,12 @@ It is also possible to use =CTRL= while scrolling the mouse wheel.
   (use-package nerd-icons)
 #+end_src
 
-* ALL THE ICONS
-This is an icon set that can be used with dashboard, dired, ibuffer, and other Emacs programs.
+* NERD ICONS
+This is an icon set that can be used with dashboard, dired, ibuffer, and other Emacs programs.  After loading this, run =M-x nerd-icons-install-fonts= once to install the Nerd Font glyphs.
 
 #+begin_src emacs-lisp
-  (use-package all-the-icons
-    :ensure t
-    :if (display-graphic-p))
-
-  (use-package all-the-icons-dired
-    :hook (dired-mode . (lambda () (all-the-icons-dired-mode t)=)))
+  (use-package nerd-icons-dired
+    :hook (dired-mode . nerd-icons-dired-mode))
 #+end_src
 
 * BACKUP
@@ -344,35 +341,6 @@ An RSS newsfeed reader for Emacs.  Move through the articles with 'j/k'.  Move t
   (setq ellama-sessions-directory "~/.config/emacs/ellama-sessions/"
         ellama-sessions-auto-save t))
 
-#+end_src
-
-* ERADIO
-[[https://github.com/olavfosse/eradio][eradio]] is a simple Internet radio player for Emacs.  It uses 'vlc as its backend by default, but you can change the =eradio-player= variable to use another multimedia player.  I have set eradio to use 'mpv' instead of 'vlc' because it supports more types of Internet radio streams.
-
-#+begin_src emacs-lisp
-(use-package eradio
-  :init
-  (setq eradio-player '("mpv" "--no-video" "--no-terminal"))
-  :config
-  (setq eradio-channels '(("Totally 80s FM" . "https://zeno.fm/radio/totally-80s-fm/")
-                          ("Oldies Radio 50s-60s" . "https://zeno.fm/radio/oldies-radio-50s-60s/")
-                          ("Oldies Radio 70s" . "https://zeno.fm/radio/oldies-radio-70s/")
-                          ("Unlimited 80s" . "https://zeno.fm/radio/unlimited80s/")
-                          ("80s Hits" . "https://zeno.fm/radio/80shits/")
-                          ("90s Hits" . "https://zeno.fm/radio/90s_HITS/")
-                          ("2000s Pop" . "https://zeno.fm/radio/2000s-pop/")
-                          ("The 2000s" . "https://zeno.fm/radio/the-2000s/")
-                          ("Hits 2010s" . "https://zeno.fm/radio/helia-hits-2010/")
-                          ("Classical Radio" . "https://zeno.fm/radio/classical-radio/")
-                          ("Classical Relaxation" . "https://zeno.fm/radio/radio-christmas-non-stop-classical/")
-                          ("Classic Rock" . "https://zeno.fm/radio/classic-rockdnb2sav8qs8uv/")
-                          ("Gangsta49" . "https://zeno.fm/radio/gangsta49/")
-                          ("HipHop49" . "https://zeno.fm/radio/hiphop49/")
-                          ("Madhouse Country Radio" . "https://zeno.fm/radio/madhouse-country-radio/")
-                          ("PopMusic" . "https://zeno.fm/radio/popmusic74vyurvmug0uv/")
-                          ("PopStars" . "https://zeno.fm/radio/popstars/")
-                          ("RadioMetal" . "https://zeno.fm/radio/radio-metal/")
-                          ("RocknRoll Radio" . "https://zeno.fm/radio/rocknroll-radio994c7517qs8uv/"))))
 #+end_src
 
 
@@ -605,13 +573,6 @@ Install =luacheck= from your Linux distro's repositories for flycheck to work co
   ;; set for us, so no need to specify each individually.
   (amtl/leader-keys
     "p" '(projectile-command-map :wk "Projectile"))
-  
-  (amtl/leader-keys
-    "r" '(:ignore t :wk "Radio")
-    "r p" '(eradio-play :wk "Eradio play")
-    "r s" '(eradio-stop :wk "Eradio stop")
-    "r t" '(eradio-toggle :wk "Eradio toggle"))
-
 
   (amtl/leader-keys
     "s" '(:ignore t :wk "Search")
@@ -630,6 +591,7 @@ Install =luacheck= from your Linux distro's repositories for flycheck to work co
     "t o" '(org-mode :wk "Toggle org mode")
     "t r" '(rainbow-mode :wk "Toggle rainbow mode")
     "t t" '(visual-line-mode :wk "Toggle truncated lines")
+    "t u" '(vundo :wk "Visualize undo tree")
     "t v" '(vterm-toggle :wk "Toggle vterm"))
 
   (amtl/leader-keys
@@ -728,10 +690,6 @@ Adding highlights to TODO and related words.
     (setq enable-recursive-minibuffers t)
     :config
     (ivy-mode))
-
-  (use-package all-the-icons-ivy-rich
-    :ensure t
-    :init (all-the-icons-ivy-rich-mode 1))
 
   (use-package ivy-rich
     :after ivy
@@ -1103,45 +1061,45 @@ Eshell is an Emacs 'shell' that is written in Elisp.
         eshell-visual-commands '("bash" "fish" "htop" "ssh" "top" "zsh"))
 #+end_src
 
-# ** Vterm
-# Vterm is a terminal emulator within Emacs.  The 'shell-file-name' setting sets the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm.  By default, the shell is set to 'fish' but could change it to 'bash' or 'zsh' if you prefer.
+** Vterm
+Vterm is a terminal emulator within Emacs.  The 'shell-file-name' setting sets the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm.  By default, the shell is set to 'bash' but could change it to 'fish' or 'zsh' if you prefer.  On WSL/Ubuntu, this requires =libvterm-dev=, =cmake=, =make=, and a C compiler to be installed (=sudo apt install libvterm-dev cmake make gcc=); Emacs will compile the module once on first load.
 
-# #+begin_src emacs-lisp
-# (use-package vterm
-#   :ensure t
-#   :config
-#   (setq shell-file-name "/bin/sh"
-#         vterm-max-scrollback 5000))
-# #+end_src
+#+begin_src emacs-lisp
+(use-package vterm
+  :ensure t
+  :config
+  (setq shell-file-name "/bin/bash"
+        vterm-max-scrollback 5000))
+#+end_src
 
-# ** Vterm-Toggle 
-# [[https://github.com/jixiuf/vterm-toggle][vterm-toggle]] toggles between the vterm buffer and whatever buffer you are editing.
+** Vterm-Toggle 
+[[https://github.com/jixiuf/vterm-toggle][vterm-toggle]] toggles between the vterm buffer and whatever buffer you are editing.
 
-# #+begin_src emacs-lisp
-# (use-package vterm-toggle
-#   :ensure t
-#   :after vterm
-#   :config
-#   ;; When running programs in Vterm and in 'normal' mode, make sure that ESC
-#   ;; kills the program as it would in most standard terminal programs.
-#   (evil-define-key 'normal vterm-mode-map (kbd "<escape>") 'vterm--self-insert)
-#   (setq vterm-toggle-fullscreen-p nil)
-#   (setq vterm-toggle-scope 'project)
-#   (add-to-list 'display-buffer-alist
-#                '((lambda (buffer-or-name _)
-#                      (let ((buffer (get-buffer buffer-or-name)))
-#                        (with-current-buffer buffer
-#                          (or (equal major-mode 'vterm-mode)
-#                              (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-#                   (display-buffer-reuse-window display-buffer-at-bottom)
-#                   ;;(display-buffer-reuse-window display-buffer-in-direction)
-#                   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-#                   ;;(direction . bottom)
-#                   ;;(dedicated . t) ;dedicated is supported in emacs27
-#                   (reusable-frames . visible)
-#                   (window-height . 0.4))))
+#+begin_src emacs-lisp
+(use-package vterm-toggle
+  :ensure t
+  :after vterm
+  :config
+  ;; When running programs in Vterm and in 'normal' mode, make sure that ESC
+  ;; kills the program as it would in most standard terminal programs.
+  (evil-define-key 'normal vterm-mode-map (kbd "<escape>") 'vterm--self-insert)
+  (setq vterm-toggle-fullscreen-p nil)
+  (setq vterm-toggle-scope 'project)
+  (add-to-list 'display-buffer-alist
+               '((lambda (buffer-or-name _)
+                     (let ((buffer (get-buffer buffer-or-name)))
+                       (with-current-buffer buffer
+                         (or (equal major-mode 'vterm-mode)
+                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                  (display-buffer-reuse-window display-buffer-at-bottom)
+                  ;;(display-buffer-reuse-window display-buffer-in-direction)
+                  ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                  ;;(direction . bottom)
+                  ;;(dedicated . t) ;dedicated is supported in emacs27
+                  (reusable-frames . visible)
+                  (window-height . 0.4))))
 
-# #+end_src
+#+end_src
 
 * SUDO EDIT
 [[https://github.com/nflath/sudo-edit][sudo-edit]] gives us the ability to open files with sudo privileges or switch over to editing with sudo privileges if we initially opened the file without such privileges.
@@ -1175,10 +1133,6 @@ Eshell is an Emacs 'shell' that is written in Elisp.
 
 #+end_src
 
-* TRANSIENT
-#+begin_src emacs-lisp
-(use-package transient)
-#+end_src
 
 * TRANSPARENCY
 With Emacs version 29, true transparency has been added.  I have turned transparency off by setting the alpha to '100'.  If you want some slight transparency, try setting alpha to '90'.  Of course, if you set alpha to '0', the background of Emacs would completely transparent.
@@ -1189,29 +1143,25 @@ With Emacs version 29, true transparency has been added.  I have turned transpar
 #+end_src
 
 
-* UNDO TREE
+* UNDO
+[[https://codeberg.org/ideasman42/emacs-undo-fu][undo-fu]] provides simple, linear-feeling undo/redo on top of Emacs' built-in undo history (no data loss, just friendlier commands).  [[https://codeberg.org/ideasman42/emacs-undo-fu-session][undo-fu-session]] persists that history across restarts.  [[https://github.com/casouri/vundo][vundo]] draws the undo history as a tree on demand, for the rare occasions you want to see and jump between branches.
 
 #+begin_src emacs-lisp
-  (use-package undo-tree
+  (use-package undo-fu
     :config
-    (setq undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory "undo-tree"))))
-    (global-undo-tree-mode)
+    (setq undo-fu-allow-undo-in-region t)
+    (global-set-key (kbd "C-z") #'undo-fu-only-undo)
+    (global-set-key (kbd "C-S-z") #'undo-fu-only-redo))
 
-    (defun +undo-tree-suppress-undo-history-saved-message (undo-tree-save-history &rest args)
-      "Suppress the message saying that the undo history file was saved (because this happens every single time you save a file)."
-      (let ((inhibit-message t))
-	(apply undo-tree-save-history args)))
+  (use-package undo-fu-session
+    :config
+    (setq undo-fu-session-directory (concat user-emacs-directory "undo-fu-session"))
+    (global-undo-fu-session-mode))
 
-    (defun +undo-tree-suppress-buffer-modified-message (undo-tree-load-history &rest args)
-      "Suppress the message saying that the undo history could not be loaded because the file changed outside of Emacs."
-      (let ((inhibit-message t))
-	(apply undo-tree-load-history args)))
-
-    (advice-add #'undo-tree-load-history :around
-		#'+undo-tree-suppress-undo-history-saved-message)
-
-    (advice-add #'undo-tree-load-history :around
-		#'+undo-tree-suppress-buffer-modified-message))
+  (use-package vundo
+    :commands vundo
+    :config
+    (setq vundo-glyph-alist vundo-unicode-symbols))
 #+end_src
 
 * WHICH-KEY
@@ -1236,3 +1186,10 @@ With Emacs version 29, true transparency has been added.  I have turned transpar
 	  which-key-separator " → " ))
 #+end_src
 
+* YASNIPPET
+
+#+begin_src emacs-lisp
+(use-package yasnippet
+:config
+(yas-global-mode 1))
+#+end_src
